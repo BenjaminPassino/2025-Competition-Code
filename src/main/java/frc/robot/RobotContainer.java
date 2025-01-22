@@ -45,9 +45,9 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed ) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed ) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate ) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(slowspeed(-joystick.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
+                    .withVelocityY(slowspeed(-joystick.getLeftX() * MaxSpeed )) // Drive left with negative X (left)
+                    .withRotationalRate(slowspeed(-joystick.getRightX() * MaxAngularRate )) // Drive counterclockwise with negative X (left)
                     )
         );
  
@@ -68,7 +68,21 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
     
+
+     
     
+    }
+
+
+    public double slowspeed (double stick){
+
+        if (joystick.getRawAxis(3) > 0.1) {
+    
+            return stick*0.2;
+
+        }
+        else{return stick;}
+
     }
 
     public Command getAutonomousCommand() {
