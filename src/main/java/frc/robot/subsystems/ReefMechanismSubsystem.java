@@ -3,11 +3,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 
 public class ReefMechanismSubsystem extends SubsystemBase{
@@ -20,14 +18,11 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static PWMSparkMax CoralArmMotor = new PWMSparkMax(Constants.CoralArmMotorPort);
     //Elevator motor
     private final static PWMSparkMax ElevatorMotor = new PWMSparkMax(Constants.ElevatorMotorPort);
-        // Deep Climb
-        private final static PWMSparkMax DeepClimbMotor = new PWMSparkMax(Constants.DeepClimbMotorPort);
-        //deep climb servo motor
+ 
     
         /* Limit Switch */
         private final DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
-        private final DigitalInput DeepClimbArmLimitSwitch = new DigitalInput(Constants.DeepClimbArmLimitSwitchPort);
-        private final DigitalInput DeepClimbCageLimitSwitch = new DigitalInput(Constants.DeepClimbCageLimitSwitchPort);
+       
         private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
     
         /* Encoders */
@@ -39,17 +34,10 @@ public class ReefMechanismSubsystem extends SubsystemBase{
             
       //    }
     
-          /* CONTROLS */
-    
-      
-    
-    // call buttons here
-    // learn by 1/21
     
     /* CORAL MECHANISM */
           //score coral
           public Command CoralScoringMethod() { 
-            //TODO figure out how to call
             return run(
               () -> {
                 System.out.println("coral scoring works");
@@ -67,7 +55,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
             }
             else
             {
-                CoralArmMotor.set(.2); // TODO do not know
+                CoralArmMotor.set(.2); 
             }
             return CoralArmLimitSwitch.get();
           }
@@ -91,7 +79,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
             }
             else
             {
-                CoralArmMotor.set(.2); // TODO do not know
+                CoralArmMotor.set(.2); 
             }
             return CoralArmLimitSwitch.get();
           }
@@ -154,7 +142,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
       {
 
       }
-
+// TODO FINISH CODING IN LIMIT SWITCH!!!
       //CHECKING IF ELEVATOR IS AT BOTTOM
    //   public boolean ElevatorPosition() // do not know if this works
    //   {
@@ -201,7 +189,3 @@ public class ReefMechanismSubsystem extends SubsystemBase{
 
 /* Encoders */
 //CoralArmEncoder
-
-// limit switch or encoder for coral
-// four settings for elevator height
-//  
