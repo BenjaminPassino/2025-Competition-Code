@@ -31,20 +31,20 @@ public final class Constants {
 
   //ALGAE
   public static final int LeftAlgaeMotorPort = 0; //TODO This will need updated
-  public static final int RightAlgaeMotorPort = 0;
+  public static final int RightAlgaeMotorPort = 1;
   //CORAL
-  public static final int CoralScoringMotorPort = 0;
-  public static final int CoralArmMotorPort = 0;
+  public static final int CoralScoringMotorPort = 2;
+  public static final int CoralArmMotorPort = 3;
   //ELEVATOR
-  public static final int ElevatorMotorPort = 0;
+  public static final int ElevatorMotorPort = 4;
   //DEEP CLIMB
-  public static final int DeepClimbMotorPort = 0;
+  public static final int DeepClimbMotorPort = 5;
   
   //Limit Switch
   public static final int CoralArmLimitSwitchPort = 0;
-  public static final int ElevatorBottomLimitSwitchPort = 0;
-  public static final int DeepClimbArmLimitSwitchPort = 0;
-  public static final int DeepClimbCageLimitSwitchPort = 0;
+  public static final int ElevatorBottomLimitSwitchPort = 1;
+  public static final int DeepClimbArmLimitSwitchPort = 3;
+  public static final int DeepClimbCageLimitSwitchPort = 4;
   //end of mech items
 
 

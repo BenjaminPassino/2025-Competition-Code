@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ReefMechanismSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -21,10 +22,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final ReefMechanismSubsystem reefSubsystem = new ReefMechanismSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
+  private final CommandXboxController mechController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
+
+  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -45,10 +49,37 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+  //  new Trigger(reefSubsystem).onTrue(new ExampleCommand(reefSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    
+    /*
+     * x = elevator up
+     * y = elevator down
+     * a = coral scoring
+     * b = coral collection
+     * left bumper = algae scoring
+     * right bumper = algae collection
+     * all six work
+     * not final controls
+     * 
+     * wip
+     * deep climb controls
+     */
+    mechController.x().whileTrue(reefSubsystem.ElevatorUpMethod());
+
+    mechController.y().whileTrue(reefSubsystem.ElevatorDownMethod());
+
+    mechController.a().whileTrue(reefSubsystem.CoralScoringMethod());
+
+    mechController.b().whileTrue(reefSubsystem.CoralCollectionMethod());
+
+    mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod());
+
+    mechController.leftBumper().whileTrue(reefSubsystem.AlgaeScoringMethod());
+
+    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**
