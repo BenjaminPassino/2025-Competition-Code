@@ -18,7 +18,6 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static PWMSparkMax CoralArmMotor = new PWMSparkMax(Constants.CoralArmMotorPort);
     //Elevator motor
     private final static PWMSparkMax ElevatorMotor = new PWMSparkMax(Constants.ElevatorMotorPort);
- 
     
         /* Limit Switch */
         private final DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
@@ -144,24 +143,24 @@ public class ReefMechanismSubsystem extends SubsystemBase{
       }
 // TODO FINISH CODING IN LIMIT SWITCH!!!
       //CHECKING IF ELEVATOR IS AT BOTTOM
-   //   public boolean ElevatorPosition() // do not know if this works
-   //   {
-    //    if (ElevatorBottomLimitSwitch.get())
-   //     {
-//            ElevatorMotor.set(0);
-  //          System.out.println("elevator stop works");
-  //      }
-    //    else 
-   //     {
- //           ElevatorDownMethod();
-   //     }
-     //   return ElevatorBottomLimitSwitch.get();
-      // }
-      // reset encoder
+      public boolean ElevatorPosition() // do not know if this works
+      {
+        if (ElevatorBottomLimitSwitch.get())
+        {
+           ElevatorMotor.set(0);
+            System.out.println("elevator stop works");
+        } 
+       // else 
+       // {
+      //     ElevatorDownMethod();
+      //  }
+        return ElevatorBottomLimitSwitch.get();
+       }
+      
 
 /* DEEP CLIMB */
 
-// press buttom
+// press button
 // check position
 // grab on to cage
 // lift robot
