@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DeepClimbMechanismSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ReefMechanismSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,6 +24,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ReefMechanismSubsystem reefSubsystem = new ReefMechanismSubsystem();
+  private final DeepClimbMechanismSubsystem deepClimbSubsystem = new DeepClimbMechanismSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController mechController =
@@ -77,7 +79,9 @@ public class RobotContainer {
 
     mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod());
 
-    mechController.leftBumper().whileTrue(reefSubsystem.AlgaeScoringMethod());
+    mechController.leftBumper().whileTrue(reefSubsystem.AlgaeScoringMethod()); 
+
+    mechController.rightTrigger().whileTrue(deepClimbSubsystem.DeepClimbGrab());
 
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }

@@ -157,7 +157,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
    //     }
      //   return ElevatorBottomLimitSwitch.get();
       // }
-      
+      // reset encoder
 
 /* DEEP CLIMB */
 

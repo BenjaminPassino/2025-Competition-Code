@@ -39,6 +39,7 @@ public final class Constants {
   public static final int ElevatorMotorPort = 4;
   //DEEP CLIMB
   public static final int DeepClimbMotorPort = 5;
+  public static final int DeepClimbServoPort = 6;
   
   //Limit Switch
   public static final int CoralArmLimitSwitchPort = 0;
