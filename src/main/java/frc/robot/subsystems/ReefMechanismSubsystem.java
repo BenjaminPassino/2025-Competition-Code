@@ -43,7 +43,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                 System.out.println("coral scoring works");
             if (ArmScoringPosition())
             {
-                CoralScoringMotor.set(.4);
+                CoralScoringMotor.set(Constants.CoralScoringSpeed);
             }});
           }
     
@@ -55,7 +55,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
             }
             else
             {
-                CoralArmMotor.set(.2); 
+                CoralArmMotor.set(Constants.CoralArmSpeed); 
             }
             return CoralArmLimitSwitch.get();
           }
@@ -67,7 +67,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                 System.out.println("coral collection works");
             if (ArmCollectionPosition())
             {
-                CoralScoringMotor.set(.4);
+                CoralScoringMotor.set(Constants.CoralScoringSpeed);
             } });
         }
     
@@ -79,7 +79,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
             }
             else
             {
-                CoralArmMotor.set(.2); 
+                CoralArmMotor.set(Constants.CoralCollectionArmSpeed); 
             }
             return CoralArmLimitSwitch.get();
           }
@@ -104,7 +104,7 @@ public Command LimitSwitchTest(){
           return run(
            () -> {
           System.out.println("algae collection works");
-            AlgaeMotorControl(.2);
+            AlgaeMotorControl(Constants.AlgaeCollectionSpeed);
            }); 
           }
           
@@ -113,7 +113,7 @@ public Command LimitSwitchTest(){
           {
             return run (
               () -> {
-            AlgaeMotorControl(-0.2);
+            AlgaeMotorControl(Constants.AlgaeScoringSpeed);
               });
           }
     
@@ -132,7 +132,7 @@ public Command LimitSwitchTest(){
           {
             return run(
               () -> { 
-                ElevatorMotor.set(.2);
+                ElevatorMotor.set(Constants.ElevatorUpSpeed);
               System.out.println("elevator up works");
               });//TODO find speed for elevator 
       }
@@ -142,7 +142,7 @@ public Command LimitSwitchTest(){
     {
        return run(
         () -> {
-          ElevatorMotor.set(-.2);
+          ElevatorMotor.set(Constants.ElevatorDownSpeed);
         System.out.println("elevator down works");
         }
         );

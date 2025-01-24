@@ -48,6 +48,21 @@ public final class Constants {
   public static final int DeepClimbCageLimitSwitchPort = 4;
   //end of mech items
 
+  /*    Motor Speeds     */
+
+
+  //REEF
+ public static final double CoralScoringSpeed = 0.2;
+ public static final double CoralArmSpeed = 0.2;
+ public static final double CoralCollectionSpeed = 0.2;
+ public static final double CoralCollectionArmSpeed = 0.2;
+ public static final double AlgaeCollectionSpeed = 0.2;
+ public static final double AlgaeScoringSpeed = 0.2;
+ public static final double ElevatorUpSpeed = 0.2;
+ public static final double ElevatorDownSpeed = 0.2;
+
+  //CLIMB
+
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
