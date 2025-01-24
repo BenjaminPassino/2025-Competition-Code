@@ -20,31 +20,57 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
        private final DigitalInput DeepClimbArmLimitSwitch = new DigitalInput(Constants.DeepClimbArmLimitSwitchPort);
        private final DigitalInput DeepClimbCageLimitSwitch = new DigitalInput(Constants.DeepClimbCageLimitSwitchPort);
 
-       public Command DeepClimbGrab() {
+
+
+       public Command DeepClimb(){ // full mechanism
+              return run(
+                     () -> {
+                            if (DeepClimbCageLimitSwitch.get()) //checks for limit switch
+                     DeepClimbLift(); // lifts if limit switch has been triggered
+
+                     else{
+                   DeepClimbGrab();   // grabs cage if it has not been grabbed
+                     } 
+                     }
+              );
+       }
+
+
+       // may not work
+       public Command DeepClimbGrab() { // grabs onto cage with ratchet
               return run(
               () -> {
-                     if (DeepClimbCageLimitSwitch.get())
-                     {
                     System.out.println("deep climb grabbing works");
                      DeepClimbServo.set(.2);
 
                      }
-              }
+              
               );
        }
 
        public boolean DeepClimbGrabPosition(){
        if (DeepClimbCageLimitSwitch.get())
             {
-                DeepClimbServo.set(0); //do not know until motor is mounted
-            }
-            else
-            {
-                DeepClimbServo.set(.05); 
-            }
+                DeepClimbServo.set(0); } // checks if the ratchet is in place
+   //         else
+     //       {
+  //              DeepClimbServo.set(.05); 
+//            }
             return DeepClimbCageLimitSwitch.get();
+              
           }
 
+       
+          public Command DeepClimbLift(){
+              return run(
+                  () -> {
+                     if (DeepClimbCageLimitSwitch.get()); //checks for coral limit switch
+                     System.out.println("deep climb lift works");
+                     DeepClimbMotor.set(.2); // lifts robot when ratchet is in place
+                  }   
+
+              );
+          }
 
 //grab cage
 //stop once cage is grabbed
