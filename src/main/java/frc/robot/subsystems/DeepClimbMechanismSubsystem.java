@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+// hi
 
 
 
@@ -27,7 +27,6 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
                      () -> {
                             if (DeepClimbCageLimitSwitch.get()) //checks for limit switch
                      DeepClimbLift(); // lifts if limit switch has been triggered
-
                      else{
                    DeepClimbGrab();   // grabs cage if it has not been grabbed
                      } 
@@ -42,9 +41,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               () -> {
                     System.out.println("deep climb grabbing works");
                      DeepClimbServo.set(.2);
-
-                     }
-              
+                     }  
               );
        }
 
@@ -56,8 +53,16 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
      //       {
   //              DeepClimbServo.set(.05); 
 //            }
-            return DeepClimbCageLimitSwitch.get();
-              
+            return DeepClimbCageLimitSwitch.get();    
+          }
+
+          public boolean DeepClimbLiftPosition(){
+              if (DeepClimbArmLimitSwitch.get())
+              {
+                     DeepClimbMotor.set(0);
+                     System.out.println("deep climb lift stop works");
+              }
+              return DeepClimbArmLimitSwitch.get();
           }
 
        
@@ -68,7 +73,6 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
                      System.out.println("deep climb lift works");
                      DeepClimbMotor.set(.2); // lifts robot when ratchet is in place
                   }   
-
               );
           }
 

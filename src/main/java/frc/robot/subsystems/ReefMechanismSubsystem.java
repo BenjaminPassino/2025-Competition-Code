@@ -150,10 +150,9 @@ public Command LimitSwitchTest(){
       }
 
       //STOP
-      public void ElevatorStopMethod() // may not need 
-      {
-
-      }
+    //  public void ElevatorStopMethod() // may not need 
+   //   {
+   //   }
 // TODO FINISH CODING IN LIMIT SWITCH!!!
       //CHECKING IF ELEVATOR IS AT BOTTOM
       public boolean ElevatorPosition() // do not know if this works
@@ -161,7 +160,7 @@ public Command LimitSwitchTest(){
         if (ElevatorBottomLimitSwitch.get())
         {
            ElevatorMotor.set(0);
-            System.out.println("elevator stop works");
+            System.out.println("elevator stopped working");
         } 
        // else 
        // {
