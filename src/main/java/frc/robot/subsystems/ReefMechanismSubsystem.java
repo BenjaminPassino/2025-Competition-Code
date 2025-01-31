@@ -23,29 +23,45 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         /* Limit Switch */
         private final DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
        
+// that feeling when you and your friends take a boat to Istanbul and eat bacon on top of a mountain bc you were bored in history class
+
         private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
     
         /* Encoders */
         private final Encoder CoralArmEncoder = new Encoder(5, 6);
-    
-       // public Command mechanismInitializeCommand() {
-            // Inline construction of command goes here.
-            // Subsystem::RunOnce implicitly requires `this` subsystem.
+        private final Encoder ElevatorEncoder = new Encoder(7,8);
+        private double EncoderDistance =1;
             
-      //    }
-    
-    
-    /* CORAL MECHANISM */
-          //score coral
-          public Command CoralScoringMethod() { 
-            return run(
-              () -> {
-                System.out.println("coral scoring works");
-            if (ArmScoringPosition())
-            {
-                CoralScoringMotor.set(Constants.CoralScoringSpeed);
-            }});
-          }
+               // public Command mechanismInitializeCommand() {
+                    // Inline construction of command goes here.
+                    // Subsystem::RunOnce implicitly requires `this` subsystem.
+                    
+              //    }
+            
+            
+            /* CORAL MECHANISM */
+                  //score coral
+                  public Command CoralScoringMethod() { 
+                    return run(
+                      () -> {
+                        System.out.println("coral scoring works");
+                    if (ArmScoringPosition())
+                    {
+                        CoralScoringMotor.set(Constants.CoralScoringSpeed);
+                    }});
+                  }
+        
+        
+        
+                public Command EncoderCheck(){
+                  return run(
+        ()->{
+        EncoderDistance=ElevatorEncoder.getRate();
+        SmartDashboard.putNumber("EncoderDistance", EncoderDistance);
+}
+        
+          );
+        }
     
           //get arm into scoring position
           public Boolean ArmScoringPosition() {
@@ -53,12 +69,13 @@ public class ReefMechanismSubsystem extends SubsystemBase{
             {
                 CoralArmMotor.set(0); //do not know until motor is mounted
             }
-            else
             {
                 CoralArmMotor.set(Constants.CoralArmSpeed); 
             }
             return CoralArmLimitSwitch.get();
           }
+
+          // competition seasoning
     
           //intake coral
           public Command CoralCollectionMethod() { 
