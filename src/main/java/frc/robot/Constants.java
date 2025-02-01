@@ -69,6 +69,10 @@ public final class Constants {
  public static double L3Height = 3;
  public static double L4Height = 4;
 
+ public static int Pvar = 1;
+ public static int Ivar = 1;
+ public static int Dvar = 1; 
+
   //CLIMB
 
 

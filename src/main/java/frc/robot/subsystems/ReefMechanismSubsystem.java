@@ -1,12 +1,19 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.hal.CANAPITypes.CANDeviceType;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkClosedLoopController;
+
 import frc.robot.Constants;
 
 public class ReefMechanismSubsystem extends SubsystemBase{
@@ -18,7 +25,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static PWMSparkMax CoralScoringMotor = new PWMSparkMax(Constants.CoralScoringMotorPort);
     private final static PWMSparkMax CoralArmMotor = new PWMSparkMax(Constants.CoralArmMotorPort);
     //Elevator motor
-    private final static PWMSparkMax ElevatorMotor = new PWMSparkMax(Constants.ElevatorMotorPort);
+    private final static SparkMax ElevatorMotor = new SparkMax(Constants.ElevatorMotorPort,MotorType.kBrushless);
     
         /* Limit Switch */
         private final DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
@@ -31,6 +38,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private final Encoder CoralArmEncoder = new Encoder(5, 6);
         private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
+        private PIDController ElevatorPID = new PIDController(Constants.Pvar, Constants.Ivar, Constants.Dvar);
         
             
                // public Command mechanismInitializeCommand() {
@@ -50,11 +58,16 @@ public class ReefMechanismSubsystem extends SubsystemBase{
               SmartDashboard.putNumber("AlgaeScoringSpeed",Constants.AlgaeScoringSpeed);
               SmartDashboard.putNumber("ElevatorUpSpeed",Constants.ElevatorUpSpeed);
               SmartDashboard.putNumber("ElevatorDownSpeed",Constants.ElevatorDownSpeed);
-              
+
               SmartDashboard.putNumber("L1",Constants.L1Height);
               SmartDashboard.putNumber("L2",Constants.L2Height);
               SmartDashboard.putNumber("L3",Constants.L3Height);
               SmartDashboard.putNumber("L4",Constants.L4Height);
+
+              ElevatorPID.setP(Constants.Pvar);
+              ElevatorPID.setI(Constants.Ivar);
+              ElevatorPID.setD(Constants.Dvar);
+              ElevatorPID.setIZone(0);
 
   }
 );
@@ -226,8 +239,23 @@ public Command LimitSwitchTest(){
       //     ElevatorDownMethod();
       //  }
         return ElevatorBottomLimitSwitch.get();
+
        }
       
+public Command ElevatorL1(){
+  return run(
+    () -> {
+
+ 
+    }
+
+);
+
+}
+
+
+
+
 
 /* DEEP CLIMB */
 

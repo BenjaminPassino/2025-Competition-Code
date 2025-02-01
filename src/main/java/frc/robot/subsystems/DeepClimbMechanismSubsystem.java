@@ -75,6 +75,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
                   }   
               );
           }
+          // rumble when ratchet grabs cage
 
 //grab cage
 //stop once cage is grabbed
