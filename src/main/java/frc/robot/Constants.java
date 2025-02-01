@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -52,21 +55,34 @@ public final class Constants {
 
 
   //REEF
- public static final double CoralScoringSpeed = 0.2;
- public static final double CoralArmSpeed = 0.2;
- public static final double CoralCollectionSpeed = 0.2;
- public static final double CoralCollectionArmSpeed = 0.2;
- public static final double AlgaeCollectionSpeed = 0.2;
- public static final double AlgaeScoringSpeed = 0.2;
- public static final double ElevatorUpSpeed = 0.2;
- public static final double ElevatorDownSpeed = 0.2;
+ public static  double CoralScoringSpeed = 0.2;
+ public static  double CoralArmSpeed = 0.2;
+ public static  double CoralCollectionSpeed = 0.2;
+ public static  double CoralCollectionArmSpeed = 0.2;
+ public static  double AlgaeCollectionSpeed = 0.2;
+ public static  double AlgaeScoringSpeed = 0.2;
+ public static  double ElevatorUpSpeed = 0.2;
+ public static  double ElevatorDownSpeed = 0.2;
+
+ public static double L1Height = 1;
+ public static double L2Height = 2;
+ public static double L3Height = 3;
+ public static double L4Height = 4;
 
   //CLIMB
 
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-
     
   }
+
+
+          
+
+
+
+
+
+            
 }

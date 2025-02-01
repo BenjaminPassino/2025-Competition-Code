@@ -24,13 +24,14 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private final DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
        
 // that feeling when you and your friends take a boat to Istanbul and eat bacon on top of a mountain bc you were bored in history class
-
+ 
         private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
     
         /* Encoders */
         private final Encoder CoralArmEncoder = new Encoder(5, 6);
         private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
+        
             
                // public Command mechanismInitializeCommand() {
                     // Inline construction of command goes here.
@@ -38,6 +39,47 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                     
               //    }
             
+            public Command Setup(){
+              return run(
+                () -> {
+              SmartDashboard.putNumber("CoralScoringSpeed",Constants.CoralScoringSpeed);  //Puts values to smart dashboard
+              SmartDashboard.putNumber("CoralArmSpeed",Constants.CoralArmSpeed);
+              SmartDashboard.putNumber("CoralCollectionSpeed",Constants.CoralCollectionSpeed);
+              SmartDashboard.putNumber("CoralCollectionArmSpeed",Constants.CoralCollectionArmSpeed);
+              SmartDashboard.putNumber("AlgaeCollectionSpeed",Constants.AlgaeCollectionSpeed);
+              SmartDashboard.putNumber("AlgaeScoringSpeed",Constants.AlgaeScoringSpeed);
+              SmartDashboard.putNumber("ElevatorUpSpeed",Constants.ElevatorUpSpeed);
+              SmartDashboard.putNumber("ElevatorDownSpeed",Constants.ElevatorDownSpeed);
+              
+              SmartDashboard.putNumber("L1",Constants.L1Height);
+              SmartDashboard.putNumber("L2",Constants.L2Height);
+              SmartDashboard.putNumber("L3",Constants.L3Height);
+              SmartDashboard.putNumber("L4",Constants.L4Height);
+
+  }
+);
+          }
+
+public Command Updater(){ //updates smart dashboard values
+  return run(
+() -> {
+  Constants.CoralScoringSpeed = (SmartDashboard.getNumber("CoralScoringSpeed",Constants.CoralScoringSpeed));
+  Constants.CoralArmSpeed = (SmartDashboard.getNumber("CoralArmSpeed",Constants.CoralArmSpeed));
+  Constants.CoralCollectionSpeed = (SmartDashboard.getNumber("CoralCollectionSpeed",Constants.CoralCollectionSpeed));
+  Constants.CoralCollectionArmSpeed = (SmartDashboard.getNumber("CoralCollectionArmSpeed",Constants.CoralCollectionArmSpeed));
+  Constants.AlgaeCollectionSpeed = (SmartDashboard.getNumber("AlgaeCollectionSpeed",Constants.AlgaeCollectionSpeed));
+  Constants.AlgaeScoringSpeed = (SmartDashboard.getNumber("AlgaeScoringSpeed",Constants.AlgaeScoringSpeed));
+  Constants.ElevatorUpSpeed = (SmartDashboard.getNumber("ElevatorUpSpeed",Constants.ElevatorUpSpeed));
+  Constants.ElevatorDownSpeed = (SmartDashboard.getNumber("ElevatorDownSpeed",Constants.ElevatorUpSpeed));
+
+  Constants.L1Height = (SmartDashboard.getNumber("L1Height",Constants.L1Height));
+  Constants.L2Height = (SmartDashboard.getNumber("L2Height",Constants.L2Height));
+  Constants.L3Height = (SmartDashboard.getNumber("L3Height",Constants.L3Height));
+  Constants.L4Height = (SmartDashboard.getNumber("L4Height",Constants.L4Height));
+
+}
+  );
+}
             
             /* CORAL MECHANISM */
                   //score coral
