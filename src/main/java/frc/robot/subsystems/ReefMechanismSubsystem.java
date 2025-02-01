@@ -13,6 +13,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 import frc.robot.Constants;
 
@@ -38,7 +45,10 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private final Encoder CoralArmEncoder = new Encoder(5, 6);
         private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
-        private PIDController ElevatorPID = new PIDController(Constants.Pvar, Constants.Ivar, Constants.Dvar);
+        private SparkMaxConfig motorconfig;
+        private SparkClosedLoopController ElevatorPID = ElevatorMotor.getClosedLoopController();
+    
+
         
             
                // public Command mechanismInitializeCommand() {
@@ -63,11 +73,8 @@ public class ReefMechanismSubsystem extends SubsystemBase{
               SmartDashboard.putNumber("L2",Constants.L2Height);
               SmartDashboard.putNumber("L3",Constants.L3Height);
               SmartDashboard.putNumber("L4",Constants.L4Height);
-
-              ElevatorPID.setP(Constants.Pvar);
-              ElevatorPID.setI(Constants.Ivar);
-              ElevatorPID.setD(Constants.Dvar);
-              ElevatorPID.setIZone(0);
+              
+          
 
   }
 );
@@ -242,18 +249,40 @@ public Command LimitSwitchTest(){
 
        }
       
+
+
 public Command ElevatorL1(){
   return run(
     () -> {
-
- 
+      motorconfig.closedLoop
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .p(0.1)
+      .i(0)
+      .d(0)
+      .outputRange(-1,1);
+      ElevatorMotor.configure(motorconfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    SmartDashboard.setDefaultNumber("targetposition",0);
+    SmartDashboard.setDefaultNumber("TargetVelocity",0);
+    SmartDashboard.setDefaultBoolean("Control Mode",false);
+    SmartDashboard.setDefaultBoolean("Reset Encoder",false);
     }
-
 );
+}
 
+public Command ElevatorL2(){
+  return run(
+() -> {
+if (SmartDashboard.getBoolean("Control Mode",false)){
+  double targetPosition = SmartDashboard.getNumber("TargetVelocity",0);
+}else{
+  double targetPosition = SmartDashboard.getNumber("targetposition",0);
+  ElevatorPID.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 }
 
 
+}
+  );
+}
 
 
 
