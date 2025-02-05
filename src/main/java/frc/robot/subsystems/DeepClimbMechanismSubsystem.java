@@ -17,7 +17,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
        private final static Servo DeepClimbServo = new Servo(Constants.DeepClimbServoPort);
 
        //limit switch
-       private final DigitalInput DeepClimbArmLimitSwitch = new DigitalInput(Constants.DeepClimbArmLimitSwitchPort);
+    //   private final DigitalInput DeepClimbArmLimitSwitch = new DigitalInput(Constants.DeepClimbArmLimitSwitchPort);
        private final DigitalInput DeepClimbCageLimitSwitch = new DigitalInput(Constants.DeepClimbCageLimitSwitchPort);
 
 
@@ -56,14 +56,14 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
             return DeepClimbCageLimitSwitch.get();    
           }
 
-          public boolean DeepClimbLiftPosition(){
-              if (DeepClimbArmLimitSwitch.get())
+    //      public boolean DeepClimbLiftPosition(){
+      //        if (DeepClimbArmLimitSwitch.get())
               {
                      DeepClimbMotor.set(0);
                      System.out.println("deep climb lift stop works");
               }
-              return DeepClimbArmLimitSwitch.get();
-          }
+     //         return DeepClimbArmLimitSwitch.get();
+     //     }
 
        
           public Command DeepClimbLift(){
