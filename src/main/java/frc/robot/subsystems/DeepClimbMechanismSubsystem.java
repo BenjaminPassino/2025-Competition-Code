@@ -2,10 +2,21 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+//import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+//import com.revrobotics.spark.SparkClosedLoopController;
+//import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.spark.SparkBase.ControlType;
+//import com.revrobotics.spark.SparkBase.PersistMode;
+//import com.revrobotics.spark.SparkBase.ResetMode;
+//import com.revrobotics.spark.config.SparkMaxConfig;
+//import com.revrobotics.spark.ClosedLoopSlot;
+//import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 // hi
 
 
@@ -13,7 +24,7 @@ import frc.robot.Constants;
 public class DeepClimbMechanismSubsystem extends SubsystemBase{
 
        // Deep Climb
-       private final static PWMSparkMax DeepClimbMotor = new PWMSparkMax(Constants.DeepClimbMotorPort);
+       private final static SparkMax DeepClimbMotor = new SparkMax(Constants.DeepClimbMotorPort,MotorType.kBrushless);
        private final static Servo DeepClimbServo = new Servo(Constants.DeepClimbServoPort);
 
        //limit switch
