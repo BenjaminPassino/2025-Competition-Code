@@ -284,13 +284,21 @@ public Command ElevatorPIDSetup(){
 );
 }
 
-public Command ElevatorPIDMovement(){
+public Command ElevatorPIDMovement(double setpoint){
   return run(
     () -> {
       
-        double targetPosition = Constants.TARGETPOSITION;
-        ElevatorPID.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        //double targetPosition = Constants.TARGETPOSITION;
+        ElevatorPID.setReference(setpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
+    }
+  );
+}
+public Command elevatorStop()
+{
+  return run(
+    () -> {
+      ElevatorMotor.set(0);
     }
   );
 }
@@ -310,6 +318,7 @@ public Command StopMethod()
 
 }
 
+// sets targetposition to the different heights
 public Command SetToL1()
 {
   return run (

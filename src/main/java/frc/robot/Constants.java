@@ -76,6 +76,10 @@ public final class Constants {
  public static int Dvar = 1; 
  public static double TARGETPOSITION=1;
 
+ //AUTO
+ public static int AutoTimerValue = 0;
+ public static double EndRelease = 0.2;
+
 
   //CLIMB
 

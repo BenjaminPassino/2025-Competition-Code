@@ -57,19 +57,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     
-    /*
-     * x = elevator up
-     * y = elevator down
-     * a = coral scoring
-     * b = coral collection
-     * left bumper = algae scoring
-     * right bumper = algae collection
-     * all six work
-     * not final controls
-     * 
-     * wip
-     * deep climb controls
-     */
+    
     if (mechController.getRightY()<0.5){
     mechController.x().whileTrue(reefSubsystem.SetToL2());
     mechController.x().whileTrue(reefSubsystem.ElevatorPIDMovement());
