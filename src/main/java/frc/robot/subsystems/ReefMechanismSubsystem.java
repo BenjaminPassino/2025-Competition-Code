@@ -6,10 +6,14 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.RobotContainer;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -47,6 +51,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private double EncoderDistance =1;
         private SparkMaxConfig motorconfig;
         private SparkClosedLoopController ElevatorPID = ElevatorMotor.getClosedLoopController();
+        
     
 
         
@@ -193,6 +198,7 @@ public Command LimitSwitchTest(){
             return run (
               () -> {
             AlgaeMotorControl(Constants.AlgaeScoringSpeed);
+            System.out.println("algae scoring works");
               });
           }
     
@@ -228,6 +234,15 @@ public Command LimitSwitchTest(){
          //opposite of elevator up (so elevator goes down)
       }
 
+      public Command ElevatorManual()
+      {
+        return run(
+          () -> {
+            ElevatorMotor.set((RobotContainer.mechController.getRightY())/2);
+          }
+        );
+      }
+
       //STOP
     //  public void ElevatorStopMethod() // may not need 
    //   {
@@ -251,7 +266,7 @@ public Command LimitSwitchTest(){
       
 
 
-public Command ElevatorL1(){
+public Command ElevatorPIDSetup(){
   return run(
     () -> {
       motorconfig.closedLoop
@@ -269,22 +284,76 @@ public Command ElevatorL1(){
 );
 }
 
-public Command ElevatorL2(){
+public Command ElevatorPIDMovement(){
   return run(
-() -> {
-if (SmartDashboard.getBoolean("Control Mode",false)){
-  double targetPosition = SmartDashboard.getNumber("TargetVelocity",0);
-}else{
-  double targetPosition = SmartDashboard.getNumber("targetposition",0);
-  ElevatorPID.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    () -> {
+      
+        double targetPosition = Constants.TARGETPOSITION;
+        ElevatorPID.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    }
+  );
 }
 
+public Command StopMethod()
+{
+  return run(
+    () -> {
+      LeftAlgaeMotor.set(0);
+      RightAlgaeMotor.set(0);
+      CoralScoringMotor.set(0);
+      CoralArmMotor.set(0);
+      ElevatorMotor.set(0);
+      System.out.println("stop 1 works");
+    }
+  );
 
+}
+
+public Command SetToL1()
+{
+  return run (
+() -> {
+  Constants.TARGETPOSITION = Constants.L1Height;
 }
   );
 }
 
+public Command SetToL2()
+{
+  return run (
+() -> {
+  Constants.TARGETPOSITION = Constants.L2Height;
+}
+  );
+}
 
+public Command SetToL3()
+{
+  return run (
+() -> {
+  Constants.TARGETPOSITION = Constants.L3Height;
+}
+  );
+}
+
+public Command SetToL4()
+{
+  return run (
+() -> {
+  Constants.TARGETPOSITION = Constants.L4Height;
+}
+  );
+}
+
+public Command SetToCoralStation()
+{
+  return run (
+() -> {
+  Constants.TARGETPOSITION = Constants.CoralStationHeight;
+}
+  );
+}
 
 /* DEEP CLIMB */
 

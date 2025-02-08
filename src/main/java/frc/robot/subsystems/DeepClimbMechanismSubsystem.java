@@ -88,6 +88,17 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
           }
           // rumble when ratchet grabs cage
 
+          public Command DeepClimbStopMethod(){
+              return run(
+              () -> {
+                     DeepClimbMotor.set(0);
+                     DeepClimbServo.set(0);
+                     System.out.println("stop 2 works");
+
+              }
+
+              );
+          }
 //grab cage
 //stop once cage is grabbed
 //pull robot up

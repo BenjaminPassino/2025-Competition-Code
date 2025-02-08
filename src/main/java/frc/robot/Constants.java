@@ -64,15 +64,17 @@ public final class Constants {
  public static  double ElevatorUpSpeed = 0.2;
  public static  double ElevatorDownSpeed = 0.2;
 
- public static double L1Height = 1;
- public static double L2Height = 2;
- public static double L3Height = 3;
- public static double L4Height = 4;
+ public static double L1Height = 2;
+ public static double L2Height = 3;
+ public static double L3Height = 4;
+ public static double L4Height = 5;
+ public static double CoralStationHeight= 1;
 
  //PID
  public static int Pvar = 1;
  public static int Ivar = 1;
  public static int Dvar = 1; 
+ public static double TARGETPOSITION=1;
 
 
   //CLIMB

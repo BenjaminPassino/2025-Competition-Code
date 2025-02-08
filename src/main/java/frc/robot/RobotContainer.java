@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -27,7 +28,7 @@ public class RobotContainer {
   private final DeepClimbMechanismSubsystem deepClimbSubsystem = new DeepClimbMechanismSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController mechController =
+  public final static CommandXboxController mechController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   
@@ -69,13 +70,29 @@ public class RobotContainer {
      * wip
      * deep climb controls
      */
-    mechController.x().whileTrue(reefSubsystem.ElevatorUpMethod());
+    if (mechController.getRightY()<0.5){
+    mechController.x().whileTrue(reefSubsystem.SetToL2());
+    mechController.x().whileTrue(reefSubsystem.ElevatorPIDMovement());
 
-    mechController.y().whileTrue(reefSubsystem.ElevatorDownMethod());
+    mechController.y().whileTrue(reefSubsystem.SetToL4());
+    mechController.y().whileTrue(reefSubsystem.ElevatorPIDMovement());
 
-    mechController.a().whileTrue(reefSubsystem.CoralScoringMethod());
+    mechController.a().whileTrue(reefSubsystem.SetToL1());
+    mechController.a().whileTrue(reefSubsystem.ElevatorPIDMovement());
 
-    mechController.b().whileTrue(reefSubsystem.CoralCollectionMethod());
+    mechController.b().whileTrue(reefSubsystem.SetToL3());
+    mechController.b().whileTrue(reefSubsystem.ElevatorPIDMovement());
+
+    mechController.back().whileTrue(reefSubsystem.SetToCoralStation());
+    mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement());
+    }
+    else{
+      reefSubsystem.ElevatorManual();
+    }
+
+   mechController.a().whileTrue(reefSubsystem.SetToL1());
+
+
 
     mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod());
 
@@ -83,6 +100,8 @@ public class RobotContainer {
 
     mechController.rightTrigger().whileTrue(deepClimbSubsystem.DeepClimbGrab());
 
+    mechController.start().whileTrue(reefSubsystem.StopMethod());
+    mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
     
 
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
