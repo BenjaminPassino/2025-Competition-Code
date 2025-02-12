@@ -34,7 +34,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static PWMSparkMax RightAlgaeMotor = new PWMSparkMax(Constants.RightAlgaeMotorPort);
     //Coral motors
     private final static PWMSparkMax CoralScoringMotor = new PWMSparkMax(Constants.CoralScoringMotorPort);
-    private final static PWMSparkMax CoralArmMotor = new PWMSparkMax(Constants.CoralArmMotorPort);
+    private final static SparkMax CoralArmMotor = new SparkMax(Constants.CoralArmMotorPort,MotorType.kBrushless);
     //Elevator motor
     private final static SparkMax ElevatorMotor = new SparkMax(Constants.ElevatorMotorPort,MotorType.kBrushless);
     
@@ -50,7 +50,10 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
         private SparkMaxConfig motorconfig;
+        private SparkMaxConfig VVristMotorconfig;
         private SparkClosedLoopController ElevatorPID = ElevatorMotor.getClosedLoopController();
+        private SparkClosedLoopController VVristPID = CoralArmMotor.getClosedLoopController();
+
         
     
 
@@ -243,6 +246,15 @@ public Command LimitSwitchTest(){
         );
       }
 
+      public Command CoralManual()
+      {
+        return run(
+          () -> {
+            CoralArmMotor.set((RobotContainer.mechController.getLeftY())/2);
+          }
+        );
+      }
+
       //STOP
     //  public void ElevatorStopMethod() // may not need 
    //   {
@@ -271,9 +283,9 @@ public Command ElevatorPIDSetup(){
     () -> {
       motorconfig.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-      .p(0.1)
-      .i(0)
-      .d(0)
+      .p(Constants.Pvar)
+      .i(Constants.Ivar)
+      .d(Constants.Dvar)
       .outputRange(-1,1);
       ElevatorMotor.configure(motorconfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     SmartDashboard.setDefaultNumber("targetposition",0);
@@ -302,6 +314,36 @@ public Command elevatorStop()
     }
   );
 }
+
+public Command VVristPIDSetup(){
+  return run(
+    () -> {
+      VVristMotorconfig.closedLoop
+      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .p(Constants.wPvar)
+      .i(Constants.wIvar)
+      .d(Constants.wDvar)
+      .outputRange(-1,1);
+      CoralArmMotor.configure(VVristMotorconfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    SmartDashboard.setDefaultNumber("targetposition",0);
+    SmartDashboard.setDefaultNumber("TargetVelocity",0);
+    SmartDashboard.setDefaultBoolean("Control Mode",false);
+    SmartDashboard.setDefaultBoolean("Reset Encoder",false);
+    }
+);
+}
+
+public Command VVristPIDMovement(double VVristsetpoint){
+  return run(
+    () -> {
+      
+        //double targetPosition = Constants.TARGETPOSITION;
+        VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    }
+  );
+}
+
 
 public Command StopMethod()
 {

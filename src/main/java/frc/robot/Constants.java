@@ -69,6 +69,12 @@ public final class Constants {
  public static double L3Height = 4;
  public static double L4Height = 5;
  public static double CoralStationHeight= 1;
+ public static double L1Angle = 2;
+ public static double L2Angle = 3;
+ public static double L3Angle = 4;
+ public static double L4Angle = 5;
+ public static double CoralStationAngle= 1;
+
 
  //PID
  public static int Pvar = 1;
@@ -76,9 +82,16 @@ public final class Constants {
  public static int Dvar = 1; 
  public static double TARGETPOSITION=1;
 
+ public static int wPvar = 1;
+ public static int wIvar = 1;
+ public static int wDvar = 1; 
+
  //AUTO
  public static int AutoTimerValue = 0;
  public static double EndRelease = 0.2;
+ public static double L4TimeAuto = 1.5;
+ public static double AutoCollection = 1;
+ public static double StationToReef = 1;
 
 
   //CLIMB

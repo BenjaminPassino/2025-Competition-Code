@@ -1,5 +1,4 @@
 package frc.robot.commands;
-
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ReefMechanismSubsystem;
 import edu.wpi.first.wpilibj.Timer;
@@ -9,7 +8,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
-public class AutoElevatorMovement extends Command {
+
+public class AutoStationToReef extends Command{
+
+
  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ReefMechanismSubsystem reefSubsystem;
 
@@ -20,7 +22,7 @@ public Timer CoralTimer = new Timer();
    *
    * @param subsystem The subsystem used by this command.
    */
-  public AutoElevatorMovement(ReefMechanismSubsystem subsystem) {
+  public AutoStationToReef(ReefMechanismSubsystem subsystem) {
     reefSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -39,7 +41,7 @@ public Timer CoralTimer = new Timer();
   @Override
   public void execute() {
     reefSubsystem.ElevatorPIDMovement(Constants.L4Height);
-    if (CoralTimer.get() > Constants.L4TimeAuto)
+    if (CoralTimer.get() > Constants.StationToReef)
         reefSubsystem.CoralScoringMethod();
   }
     
@@ -56,6 +58,9 @@ public Timer CoralTimer = new Timer();
     return false;
   }
 }
+
+
+
 
 
 

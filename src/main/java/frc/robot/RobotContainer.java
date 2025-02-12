@@ -58,39 +58,52 @@ public class RobotContainer {
     // cancelling on release.
     
     
-    if (mechController.getRightY()<0.5){
-    mechController.x().whileTrue(reefSubsystem.SetToL2());
-    mechController.x().whileTrue(reefSubsystem.ElevatorPIDMovement());
+    if (mechController.getRightY()<0.5 && mechController.getLeftY()<0.5){
 
-    mechController.y().whileTrue(reefSubsystem.SetToL4());
-    mechController.y().whileTrue(reefSubsystem.ElevatorPIDMovement());
+      //mechController.x().whileTrue(reefSubsystem.SetToL2());
+      mechController.x().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height));
+      mechController.x().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L2Angle));
 
-    mechController.a().whileTrue(reefSubsystem.SetToL1());
-    mechController.a().whileTrue(reefSubsystem.ElevatorPIDMovement());
+      //mechController.y().whileTrue(reefSubsystem.SetToL4());
+      mechController.y().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height));
+      mechController.y().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
 
-    mechController.b().whileTrue(reefSubsystem.SetToL3());
-    mechController.b().whileTrue(reefSubsystem.ElevatorPIDMovement());
+      //mechController.a().whileTrue(reefSubsystem.SetToL1());
+      mechController.a().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height));
+      mechController.a().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L1Angle));
 
-    mechController.back().whileTrue(reefSubsystem.SetToCoralStation());
-    mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement());
+      //mechController.b().whileTrue(reefSubsystem.SetToL3());
+      mechController.b().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height));
+      mechController.b().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L3Angle));
+
+      mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
+      mechController.back().whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
+      //  mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement());
     }
     else{
       reefSubsystem.ElevatorManual();
+      reefSubsystem.CoralManual();
     }
 
-   mechController.a().whileTrue(reefSubsystem.SetToL1());
-
-
+                                    
+    
 
     mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod());
 
-    mechController.leftBumper().whileTrue(reefSubsystem.AlgaeScoringMethod()); 
+    mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()); 
 
-    mechController.rightTrigger().whileTrue(deepClimbSubsystem.DeepClimbGrab());
+    mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbGrab());
+
+    mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());
+
+    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod());
+
+    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod());
 
     mechController.start().whileTrue(reefSubsystem.StopMethod());
     mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
     
+
 
     //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
