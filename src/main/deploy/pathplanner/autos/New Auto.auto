@@ -17,15 +17,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Copy of New Path"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "New Path 2"
+            "waitTime": 10.0
           }
         },
         {

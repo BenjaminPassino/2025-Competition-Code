@@ -7,11 +7,16 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,9 +25,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AutoCommands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class RobotContainer {
+    
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -39,9 +46,7 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    public RobotContainer() {
-        configureBindings();
-    }
+
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
@@ -49,9 +54,9 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(slowspeed(-joystick.getLeftY() * MaxSpeed *.5)) // Drive forward with negative Y (forward)
-                    .withVelocityY(slowspeed(-joystick.getLeftX() * MaxSpeed* .5)) // Drive left with negative X (left)
-                    .withRotationalRate(slowspeed(-joystick.getRightX() * MaxAngularRate *.5 )) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX((-joystick.getLeftY() * MaxSpeed *.5)) // Drive forward with negative Y (forward)
+                    .withVelocityY((-joystick.getLeftX() * MaxSpeed* .5)) // Drive left with negative X (left)
+                    .withRotationalRate((-joystick.getRightX() * MaxAngularRate *.5 )) // Drive counterclockwise with negative X (left)
                     )
         );
  
@@ -77,13 +82,30 @@ public class RobotContainer {
     
     }
 
-/*
- private final SendableChooser<Command> autoChooser;
+   // private void configureButtonBindings(){
 
-  public RobotContainer() {
-    // ...
+   // }
 
-    // Build an auto chooser. This will use Commands.none() as the default option.
+private final SendableChooser<Command> autoChooser;
+
+public RobotContainer() {
+    
+
+
+
+
+    //NamedCommands.registerCommand("Elevatorup", new placeholder() );
+ 
+    new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
+
+    new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
+   
+   
+   
+   
+     configureBindings();
+
+           // Build an auto chooser. This will use Commands.none() as the default option.
     autoChooser = AutoBuilder.buildAutoChooser();
 
     // Another option that allows you to specify the default auto by its name
@@ -93,29 +115,30 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+
+  try{
+        // Load the path you want to follow using its name in the GUI
+        PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
+
+        // Create a path following command using AutoBuilder. This will also trigger event markers.
+        return AutoBuilder.followPath(path);
+    } catch (Exception e) {
+        DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+        return Commands.none();
+    }
+
+    //return autoChooser.getSelected();
+}
+}
+
+
+
+ /*public Command getAutonomousCommand() {
+    // This method loads the auto when it is called, however, it is recommended
+    // to first load your paths/autos when code starts, then return the
+    // pre-loaded auto/path
+    return new PathPlannerAuto("Example Auto");
   }
 }
 
-
-
-    public double slowspeed (double stick){
-
-        if (joystick.getRawAxis(3) > 0.1) {
-    
-            return stick*0.2;
-
-        }
-        else{return stick;}
-
-    }
-
 */
-
-
-    public Command getAutonomousCommand() {
-     
-        return new PathPlannerAuto("New Auto");
-    
-    }
-}
