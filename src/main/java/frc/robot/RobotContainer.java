@@ -16,20 +16,25 @@ import com.pathplanner.lib.events.PointTowardsZoneTrigger;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import frc.robot.subsystems.DeepClimbMechanismSubsystem;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.ReefMechanismSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoCommands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class RobotContainer {
-    
+  private final ReefMechanismSubsystem reefSubsystem = new ReefMechanismSubsystem();
+  private final DeepClimbMechanismSubsystem deepClimbSubsystem = new DeepClimbMechanismSubsystem();
+
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -45,7 +50,8 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-
+ public final static CommandXboxController mechController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
 
     private void configureBindings() {
@@ -112,6 +118,53 @@ public RobotContainer() {
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    
+    
+    if (mechController.getRightY()<0.5 && mechController.getLeftY()<0.5){
+
+      //mechController.x().whileTrue(reefSubsystem.SetToL2());
+      mechController.x().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height));
+      mechController.x().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L2Angle));
+
+      //mechController.y().whileTrue(reefSubsystem.SetToL4());
+      mechController.y().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height));
+      mechController.y().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
+
+      //mechController.a().whileTrue(reefSubsystem.SetToL1());
+      mechController.a().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height));
+      mechController.a().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L1Angle));
+
+      //mechController.b().whileTrue(reefSubsystem.SetToL3());
+      mechController.b().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height));
+      mechController.b().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L3Angle));
+
+      mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
+      mechController.back().whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
+      //  mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement());
+    }
+    else{
+      reefSubsystem.ElevatorManual();
+      reefSubsystem.CoralManual();
+    }
+
+
+    mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod());
+
+    mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()); 
+
+    mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbGrab());
+
+    mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());
+
+    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod());
+
+    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod());
+
+    mechController.start().whileTrue(reefSubsystem.StopMethod());
+    mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+    
+
   }
 
   public Command getAutonomousCommand() {
