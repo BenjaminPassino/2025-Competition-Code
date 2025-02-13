@@ -1,0 +1,52 @@
+visionSim.addAprilTags(kTagLayout);
+camera = new PhotonCamera(
+Microsoft_LifeCam_HD-3000 (1)
+);
+   // Correct pose estimate with vision measurements
+        var visionEst = vision.getEstimatedGlobalPose();
+        visionEst.ifPresent(
+                est -> {
+                    // Change our trust in the measurement based on the tags we can see
+                    var estStdDevs = vision.getEstimationStdDevs();
+
+                    drivetrain.addVisionMeasurement(
+                            est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+                });
+    // Create the vision system simulation which handles cameras and targets on the field.
+            visionSim = new VisionSystemSim("main");
+            // Add all the AprilTags inside the tag layout as visible targets to this simulated field.
+            visionSim.addAprilTags(kTagLayout);
+            // Create simulated camera properties. These can be set to mimic your actual camera.
+              // Create simulated camera properties. These can be set to mimic your actual camera.
+            var cameraProp = new SimCameraProperties();
+            cameraProp.setCalibration(960, 720, Rotation2d.fromDegrees(90));
+            cameraProp.setCalibError(0.35, 0.10);
+            cameraProp.setFPS(15);
+            cameraProp.setAvgLatencyMs(50);
+            cameraProp.setLatencyStdDevMs(15);
+            // Create a PhotonCameraSim which will update the linked PhotonCamera's values with visible
+            // targets.
+            cameraSim = new PhotonCameraSim(camera, cameraProp);
+            // Add the simulated camera to view the targets on this simulated field.
+            visionSim.addCamera(cameraSim, kRobotToCam);
+
+            cameraSim.enableDrawWireframe(true);
+             @Override
+    public void simulationPeriodic() {
+        // Update drivetrain simulation
+        drivetrain.simulationPeriodic();
+
+        // Update camera simulation
+        vision.simulationPeriodic(drivetrain.getSimPose());
+
+        var debugField = vision.getSimDebugField();
+        debugField.getObject("EstimatedRobot").setPose(drivetrain.getPose());
+        debugField.getObject("EstimatedRobotModules").setPoses(drivetrain.getModulePoses());
+
+        // Update gamepiece launcher simulation
+        gpLauncher.simulationPeriodic();
+
+        // Calculate battery voltage sag due to current draw
+        RoboRioSim.setVInVoltage(
+                BatterySim.calculateDefaultBatteryLoadedVoltage(drivetrain.getCurrentDraw()));
+    }
