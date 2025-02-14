@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoCoralCollection;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoCommands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -100,7 +101,7 @@ public RobotContainer() {
 
 
 
-    //NamedCommands.registerCommand("Elevatorup", new placeholder() );
+    NamedCommands.registerCommand("CoralCollection", reefSubsystem.AlgaeCollectionMethod() );
  
     new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
 

@@ -154,7 +154,7 @@ public Command Updater(){ //updates smart dashboard values
                 System.out.println("coral collection works");
             if (ArmCollectionPosition())
             {
-                CoralScoringMotor.set(Constants.CoralScoringSpeed);
+                CoralScoringMotor.set(Constants.CoralCollectionSpeed);
             } });
         }
     
@@ -216,28 +216,28 @@ public Command LimitSwitchTest(){
     /* ELEVATOR */
           //UP
           //TODO: Find elevator heights for all four reef levels and processor (5 total)
-          public Command ElevatorUpMethod()
-          {
-            return run(
-              () -> { 
-                ElevatorMotor.set(Constants.ElevatorUpSpeed);
-              System.out.println("elevator up works");
-              });//TODO find speed for elevator 
-      }
+       //  public Command ElevatorUpMethod()
+       //   {
+      //      return run(
+     //         () -> { 
+    //            ElevatorMotor.set(Constants.ElevatorUpSpeed);
+   //           System.out.println("elevator up works");
+  //            });//TODO find speed for elevator 
+ //     }
       //DOWN
-     public Command ElevatorDownMethod()
-       //elevator check method 
-    {
-       return run(
-        () -> {
-          ElevatorMotor.set(Constants.ElevatorDownSpeed);
-        System.out.println("elevator down works");
-        }
-        );
+    // public Command ElevatorDownMethod()
+   //    //elevator check method 
+   // {
+ //      return run(
+//        () -> {
+//ElevatorMotor.set(Constants.ElevatorDownSpeed);
+   //     System.out.println("elevator down works");
+ //       }
+  //      );
          //opposite of elevator up (so elevator goes down)
-      }
+//      }
 
-      public Command ElevatorManual()
+      public Command ElevatorManual() //manually controls elevator by setting it to the joystick value
       {
         return run(
           () -> {
@@ -246,7 +246,7 @@ public Command LimitSwitchTest(){
         );
       }
 
-      public Command CoralManual()
+      public Command CoralManual() //manually controls coral arm
       {
         return run(
           () -> {

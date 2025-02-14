@@ -57,8 +57,8 @@ public final class Constants {
   //REEF
  public static  double CoralScoringSpeed = 0.2;
  public static  double CoralArmSpeed = 0.2;
- public static  double CoralCollectionSpeed = 0.2;
- public static  double CoralCollectionArmSpeed = 0.2;
+ public static  double CoralCollectionSpeed = -0.2;
+ public static  double CoralCollectionArmSpeed = -0.2;
  public static  double AlgaeCollectionSpeed = 0.2;
  public static  double AlgaeScoringSpeed = 0.2;
  public static  double ElevatorUpSpeed = 0.2;
