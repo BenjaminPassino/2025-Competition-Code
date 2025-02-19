@@ -436,3 +436,16 @@ public Command SetToCoralStation()
 
 /* Encoders */
 //CoralArmEncoder
+
+
+
+
+
+
+
+
+
+
+
+
+//why does thiis comment exist

@@ -32,16 +32,17 @@ public final class Constants {
 
   //Motor ID's
 
-  //ALGAE
-  public static final int LeftAlgaeMotorPort = 0; //TODO This will need updated
-  public static final int RightAlgaeMotorPort = 1;
-  //CORAL
-  public static final int CoralScoringMotorPort = 2;
-  public static final int CoralArmMotorPort = 3;
-  //ELEVATOR
-  public static final int ElevatorMotorPort = 4;
-  //DEEP CLIMB
-  public static final int DeepClimbMotorPort = 5;
+  //ALGAE SPARK
+  public static final int LeftAlgaeMotorPort = 0;  //20
+  public static final int RightAlgaeMotorPort = 1; //21
+  //CORAL SPARK
+  public static final int CoralScoringMotorPort = 3; //22
+  public static final int CoralArmMotorPort = 23; //CAN
+  //ELEVATOR SPARK
+  public static final int ElevatorMotorPort = 24; //CAN
+  //DEEP CLIMB SPARK
+  public static final int DeepClimbMotorPort = 2; //25
+  //DEEP CLIMB SERVO
   public static final int DeepClimbServoPort = 6;
   
   //Limit Switch
