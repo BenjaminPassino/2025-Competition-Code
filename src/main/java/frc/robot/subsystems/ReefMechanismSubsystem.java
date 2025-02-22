@@ -39,15 +39,14 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static SparkMax ElevatorMotor = new SparkMax(Constants.ElevatorMotorPort,MotorType.kBrushless);
     
         /* Limit Switch */
-        private final DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
        
 // that feeling when you and your friends take a boat to Istanbul and eat bacon on top of a mountain bc you were bored in history class
  
         private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
     
         /* Encoders */
-        private final Encoder CoralArmEncoder = new Encoder(5, 6); //TODO initializew as internal neo encoder
-        private final Encoder ElevatorEncoder = new Encoder(7,8);
+        //private final Encoder CoralArmEncoder = new Encoder(5, 6); //TODO initializew as internal neo encoder
+       // private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
         private SparkMaxConfig motorconfig;
         private SparkMaxConfig VVristMotorconfig;
@@ -130,7 +129,7 @@ public Command Updater(){ //updates smart dashboard values
                 public Command EncoderCheck(){
                   return run(
         ()->{
-        EncoderDistance=ElevatorEncoder.getRate();
+     //   EncoderDistance=ElevatorEncoder.getRate();
         SmartDashboard.putNumber("EncoderDistance", EncoderDistance);
 }
         
@@ -139,7 +138,7 @@ public Command Updater(){ //updates smart dashboard values
     
           //get arm into scoring position
           public Boolean ArmScoringPosition() {
-            if (VVristPosition.get() ) //TODO swap from limit switch control to encoder control
+            if (CoralArmLimitSwitch.get()) //TODO swap from limit switch control to encoder control
             {
                 CoralArmMotor.set(0); //do not know until motor is mounted
             }
@@ -178,13 +177,13 @@ public Command Updater(){ //updates smart dashboard values
 
 //TESTING
 
-public Command LimitSwitchTest(){
-  return run(
-    () -> {
-  ElevatorBottomLimitSwitch.get();
-  SmartDashboard.putBoolean("Am I Working", ElevatorBottomLimitSwitch.get());
-    }); 
-}
+// public Command LimitSwitchTest(){
+//   return run(
+//     () -> {
+//   ElevatorBottomLimitSwitch.get();
+//   SmartDashboard.putBoolean("Am I Working", ElevatorBottomLimitSwitch.get());
+//     }); 
+// }
 
                                                                                            
                      
@@ -219,14 +218,14 @@ public Command LimitSwitchTest(){
     
     /* ELEVATOR */
           //UP
-          //TODO: Find elevator heights for all four reef levels and processor (5 total)
+          //: Find elevator heights for all four reef levels and processor (5 total)
        //  public Command ElevatorUpMethod()
        //   {
       //      return run(
      //         () -> { 
     //            ElevatorMotor.set(Constants.ElevatorUpSpeed);
    //           System.out.println("elevator up works");
-  //            });//TODO find speed for elevator 
+  //            }); find speed for elevator 
  //     }
       //DOWN
     // public Command ElevatorDownMethod()
@@ -265,20 +264,34 @@ public Command LimitSwitchTest(){
    //   }
 // TODO FINISH CODING IN LIMIT SWITCH!!!
       //CHECKING IF ELEVATOR IS AT BOTTOM
-      public boolean ElevatorPosition() // do not know if this works
+      public Command ElevatorStopCommand()
       {
-        if (ElevatorBottomLimitSwitch.get())
-        {
-           ElevatorMotor.set(0);
-            System.out.println("elevator stopped working"); //TODO make command
-        } 
-       // else 
-       // {
-      //     ElevatorDownMethod();
-      //  }
-        return ElevatorBottomLimitSwitch.get();
+        return run(
+        () -> {
+    //        ElevatorBottomLimitSwitch.get();
+        if (RobotContainer.ElevatorBottomLimitSwitch.get())
+        
+        ElevatorMotor.set(0);
+          ElevatorMotor.getEncoder().setPosition(0);
 
-       }
+        }
+        );
+      }
+
+      // public boolean ElevatorPosition() // do not know if this works
+      // {
+      //   if (ElevatorBottomLimitSwitch.get())
+      //   {
+      //      ElevatorMotor.set(0);
+      //       System.out.println("elevator stopped moving"); //TODO make command
+      //   } 
+      //  // else 
+      //  // {
+      // //     ElevatorDownMethod();
+      // //  }
+      //   return ElevatorBottomLimitSwitch.get();
+
+      //  }
       
 
 
