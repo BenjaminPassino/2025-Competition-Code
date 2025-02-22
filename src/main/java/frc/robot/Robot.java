@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
 @Override
 public void robotInit() {
 
-  //FollowPathCommand.warmupCommand().schedule();
+  FollowPathCommand.warmupCommand().schedule();
 }
 
 
@@ -41,7 +41,7 @@ public void robotInit() {
   @Override
   public void disabledInit() {}
 
-  /* 
+  
   public void PowerDistribution(){
 
     PowerDistribution examplePD = new PowerDistribution();
@@ -65,8 +65,8 @@ public void robotInit() {
      SmartDashboard.putNumber("Current7",current7);
   
   examplePD.setSwitchableChannel(true);
-*/
-   // }
+
+}
   
   
   @Override
@@ -77,11 +77,11 @@ public void robotInit() {
 
   @Override
   public void autonomousInit() {
-   // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-  //  if (m_autonomousCommand != null) {
-   //   m_autonomousCommand.schedule();
-  //  }
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
   }
 
   @Override
@@ -100,7 +100,7 @@ public void robotInit() {
   @Override
   public void teleopPeriodic() {
 
-   // PowerDistribution();
+    PowerDistribution();
   }
 
 

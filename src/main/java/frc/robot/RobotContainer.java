@@ -8,13 +8,13 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-//import com.pathplanner.lib.auto.AutoBuilder;
-//import com.pathplanner.lib.auto.NamedCommands;
-//import com.pathplanner.lib.commands.PathPlannerAuto;
-//import com.pathplanner.lib.events.EventTrigger;
-//import com.pathplanner.lib.events.PointTowardsZoneTrigger;
-//import com.pathplanner.lib.path.PathPlannerPath;
-//import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -51,15 +51,14 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
 
-   // private final SendableChooser<Command> autoChooser;
+   private final SendableChooser<Command> autoChooser;
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-  //  private final Field2d field;
+    private final Field2d field;
 
-  public RobotContainer() {
-    configureBindings();
-}
+
+    //public final Field2d field
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
@@ -97,28 +96,55 @@ public class RobotContainer {
 
    private void configureButtonBindings(){
 
+
+
+
    }
 
 
-/* 
+
+
+
     public RobotContainer() {
     
  
+
         new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
 
         new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
     
-        
-    
+
+
+
             // Build an auto chooser. This will use Commands.none() as the default option.
-        //autoChooser = AutoBuilder.buildAutoChooser();
+        autoChooser = AutoBuilder.buildAutoChooser();
+
 
         // Another option that allows you to specify the default auto by its name
-        // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+         autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-        //SmartDashboard.putData("Auto Chooser", autoChooser);
+        SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
+
+
+           // Logging callback for current robot pose
+           PathPlannerLogging.setLogCurrentPoseCallback((pose) -> {
+            // Do whatever you want with the pose here
+            field.setRobotPose(pose);
+        });
+
+        // Logging callback for target robot pose
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> {
+            // Do whatever you want with the pose here
+            field.getObject("target pose").setPose(pose);
+        });
+
+        // Logging callback for the active path, this is sent as a list of poses
+        PathPlannerLogging.setLogActivePathCallback((poses) -> {
+            // Do whatever you want with the poses here
+            field.getObject("path").setPoses(poses);
+        });
 
 
 
@@ -153,6 +179,6 @@ public Command singlePathCommand(){
 
 }
 
-*/
+
 
 }
