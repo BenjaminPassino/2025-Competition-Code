@@ -46,13 +46,14 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
     
         /* Encoders */
-        private final Encoder CoralArmEncoder = new Encoder(5, 6);
+        private final Encoder CoralArmEncoder = new Encoder(5, 6); //TODO initializew as internal neo encoder
         private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
         private SparkMaxConfig motorconfig;
         private SparkMaxConfig VVristMotorconfig;
         private SparkClosedLoopController ElevatorPID = ElevatorMotor.getClosedLoopController();
         private SparkClosedLoopController VVristPID = CoralArmMotor.getClosedLoopController();
+
 
         
     
@@ -81,6 +82,9 @@ public class ReefMechanismSubsystem extends SubsystemBase{
               SmartDashboard.putNumber("L2",Constants.L2Height);
               SmartDashboard.putNumber("L3",Constants.L3Height);
               SmartDashboard.putNumber("L4",Constants.L4Height);
+
+              SmartDashboard.putNumber("ElevatorEncoder",Constants.ElevatorHeight);
+              SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
               
           
 
@@ -135,7 +139,7 @@ public Command Updater(){ //updates smart dashboard values
     
           //get arm into scoring position
           public Boolean ArmScoringPosition() {
-            if (CoralArmLimitSwitch.get())
+            if (VVristPosition.get() ) //TODO swap from limit switch control to encoder control
             {
                 CoralArmMotor.set(0); //do not know until motor is mounted
             }
@@ -160,7 +164,7 @@ public Command Updater(){ //updates smart dashboard values
     
           //collect coral from station
           public Boolean ArmCollectionPosition() {
-            if (CoralArmLimitSwitch.get())
+            if (CoralArmLimitSwitch.get()) //TODO update to encoder
             {
                 CoralArmMotor.set(0); //do not know until motor is mounted
             }
@@ -266,7 +270,7 @@ public Command LimitSwitchTest(){
         if (ElevatorBottomLimitSwitch.get())
         {
            ElevatorMotor.set(0);
-            System.out.println("elevator stopped working");
+            System.out.println("elevator stopped working"); //TODO make command
         } 
        // else 
        // {
@@ -282,7 +286,7 @@ public Command ElevatorPIDSetup(){
   return run(
     () -> {
       motorconfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .p(Constants.Pvar)
       .i(Constants.Ivar)
       .d(Constants.Dvar)
@@ -302,6 +306,7 @@ public Command ElevatorPIDMovement(double setpoint){
       
         //double targetPosition = Constants.TARGETPOSITION;
         ElevatorPID.setReference(setpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        SmartDashboard.putNumber("ElevatorHeight",Constants.ElevatorHeight);
 
     }
   );
@@ -339,6 +344,7 @@ public Command VVristPIDMovement(double VVristsetpoint){
       
         //double targetPosition = Constants.TARGETPOSITION;
         VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
 
     }
   );
@@ -413,7 +419,7 @@ public Command SetToCoralStation()
 // grab on to cage
 // lift robot
 // activate limit switch and stop
-}
+
 
 // initialize components
 
@@ -438,9 +444,15 @@ public Command SetToCoralStation()
 //CoralArmEncoder
 
 
+// public Command SpeedMaths(){
+//   return run(
+//     () -> {
+// ElevatorMotor.getAbsoluteEncoder();      
 
+//     }); 
+// }
 
-
+}
 
 
 

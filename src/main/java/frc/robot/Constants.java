@@ -41,7 +41,7 @@ public final class Constants {
   //ELEVATOR SPARK
   public static final int ElevatorMotorPort = 24; //CAN
   //DEEP CLIMB SPARK
-  public static final int DeepClimbMotorPort = 2; //25
+  public static final int DeepClimbMotorPort = 25; //CAN
   //DEEP CLIMB SERVO
   public static final int DeepClimbServoPort = 6;
   
@@ -86,6 +86,17 @@ public final class Constants {
  public static int wPvar = 1;
  public static int wIvar = 1;
  public static int wDvar = 1; 
+
+ public static int cPvar = 1;
+ public static int cIvar = 1;
+ public static int cDvar = 1; 
+
+ //ENCODER
+
+ public static double Distance = 1;
+ public static double ElevatorHeight = 0;
+ public static double VVristPosition = 0;
+
 
  //AUTO
  public static int AutoTimerValue = 0;

@@ -154,9 +154,11 @@ public RobotContainer() {
 
     mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()); 
 
-    mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbGrab());
+    mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbGrab2());
 
     mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());
+
+    mechController.povRight().whileTrue(deepClimbSubsystem.DeepClimbGrab());
 
     mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod());
 

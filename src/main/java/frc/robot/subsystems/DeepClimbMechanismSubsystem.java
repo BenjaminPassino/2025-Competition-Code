@@ -2,12 +2,18 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 //import com.revrobotics.spark.SparkClosedLoopController;
 //import com.revrobotics.RelativeEncoder;
@@ -31,7 +37,9 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
     //   private final DigitalInput DeepClimbArmLimitSwitch = new DigitalInput(Constants.DeepClimbArmLimitSwitchPort);
        private final DigitalInput DeepClimbCageLimitSwitch = new DigitalInput(Constants.DeepClimbCageLimitSwitchPort);
 
-
+       
+       private SparkMaxConfig climbmotorconfig;
+        private SparkClosedLoopController ClimberPID = DeepClimbMotor.getClosedLoopController();
 
        public Command DeepClimb(){ // full mechanism
               return run(
@@ -55,6 +63,15 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
                      }  
               );
        }
+       public Command DeepClimbGrab2() { // grabs onto cage with ratchet
+              return run(
+              () -> {
+                    System.out.println("deep climb grabbing works");
+                     DeepClimbServo.set(.8);
+                     }  
+              );
+       }
+
 
        public boolean DeepClimbGrabPosition(){
        if (DeepClimbCageLimitSwitch.get())
@@ -99,6 +116,27 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
 
               );
           }
+
+
+
+
+          public Command ClimberPIDSetup(){
+  return run(
+    () -> {
+      climbmotorconfig.closedLoop
+      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+      .p(Constants.cPvar)
+      .i(Constants.cIvar)
+      .d(Constants.cDvar)
+      .outputRange(-1,1);
+      DeepClimbMotor.configure(climbmotorconfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    SmartDashboard.setDefaultNumber("targetposition",0);
+    SmartDashboard.setDefaultNumber("TargetVelocity",0);
+    SmartDashboard.setDefaultBoolean("Control Mode",false);
+    SmartDashboard.setDefaultBoolean("Reset Encoder",false);
+    }
+);
+}
 //grab cage
 //stop once cage is grabbed
 //pull robot up
