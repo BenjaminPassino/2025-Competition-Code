@@ -45,7 +45,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
     
         /* Encoders */
-        //private final Encoder CoralArmEncoder = new Encoder(5, 6); //TODO initializew as internal neo encoder
+        //private final Encoder CoralArmEncoder = new Encoder(5, 6); //
        // private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
         private SparkMaxConfig motorconfig;
@@ -118,10 +118,10 @@ public Command Updater(){ //updates smart dashboard values
                     return run(
                       () -> {
                         System.out.println("coral scoring works");
-                    if (ArmScoringPosition())
-                    {
+              //      if (ArmScoringPosition())
+               //     {
                         CoralScoringMotor.set(Constants.CoralScoringSpeed);
-                    }});
+                    });
                   }
         
         
@@ -137,16 +137,16 @@ public Command Updater(){ //updates smart dashboard values
         }
     
           //get arm into scoring position
-          public Boolean ArmScoringPosition() {
-            if (CoralArmLimitSwitch.get()) //TODO swap from limit switch control to encoder control
-            {
-                CoralArmMotor.set(0); //do not know until motor is mounted
-            }
-            {
-                CoralArmMotor.set(Constants.CoralArmSpeed); 
-            }
-            return CoralArmLimitSwitch.get();
-          }
+      //    public Boolean ArmScoringPosition() {
+      //      if (CoralArmLimitSwitch.get()) //\
+      //      {
+      //          CoralArmMotor.set(0); //do not know until motor is mounted
+      //      }
+    //        {
+   //             CoralArmMotor.set(Constants.CoralArmSpeed); 
+   //         }
+    //        return CoralArmLimitSwitch.get();
+    //      }
 
           // competition seasoning
     
@@ -155,24 +155,26 @@ public Command Updater(){ //updates smart dashboard values
             return run(
               () -> {
                 System.out.println("coral collection works");
-            if (ArmCollectionPosition())
-            {
-                CoralScoringMotor.set(Constants.CoralCollectionSpeed);
-            } });
+      //      if (ArmCollectionPosition())
+        //
+        ////    {
+               CoralScoringMotor.set(Constants.CoralCollectionSpeed);
+         //   } 
+          });
         }
     
           //collect coral from station
-          public Boolean ArmCollectionPosition() {
-            if (CoralArmLimitSwitch.get()) //TODO update to encoder
-            {
-                CoralArmMotor.set(0); //do not know until motor is mounted
-            }
-            else
-            {
-                CoralArmMotor.set(Constants.CoralCollectionArmSpeed); 
-            }
-            return CoralArmLimitSwitch.get();
-          }
+          // public Boolean ArmCollectionPosition() {
+          //   if (CoralArmLimitSwitch.get()) //
+          //   {
+          //       CoralArmMotor.set(0); //do not know until motor is mounted
+          //   }
+          //   else
+          //   {
+          //       CoralArmMotor.set(Constants.CoralCollectionArmSpeed); 
+          //   }
+          //   return CoralArmLimitSwitch.get();
+          // }
 
 
 //TESTING
@@ -211,7 +213,7 @@ public Command Updater(){ //updates smart dashboard values
             //control both algae motors
           public void AlgaeMotorControl(double speed)
           {
-            LeftAlgaeMotor.set(-speed); //TODO check motor direction
+            LeftAlgaeMotor.set(-speed);
             RightAlgaeMotor.set(speed);
           }
     
@@ -253,7 +255,14 @@ public Command Updater(){ //updates smart dashboard values
       {
         return run(
           () -> {
-            CoralArmMotor.set((RobotContainer.mechController.getLeftY())/2);
+          
+            if (CoralArmMotor.getAbsoluteEncoder().getPosition()>Constants.CoralMaximum){
+              CoralArmMotor.set(-0.1);
+            }
+            if (CoralArmMotor.getAbsoluteEncoder().getPosition()<Constants.CoralMinimum){
+              CoralArmMotor.set(0.1);
+            }
+            else CoralArmMotor.set((RobotContainer.mechController.getLeftY())/2);
           }
         );
       }
@@ -262,7 +271,7 @@ public Command Updater(){ //updates smart dashboard values
     //  public void ElevatorStopMethod() // may not need 
    //   {
    //   }
-// TODO FINISH CODING IN LIMIT SWITCH!!!
+
       //CHECKING IF ELEVATOR IS AT BOTTOM
       public Command ElevatorStopCommand()
       {
@@ -283,7 +292,7 @@ public Command Updater(){ //updates smart dashboard values
       //   if (ElevatorBottomLimitSwitch.get())
       //   {
       //      ElevatorMotor.set(0);
-      //       System.out.println("elevator stopped moving"); //TODO make command
+      //       System.out.println("elevator stopped moving"); //
       //   } 
       //  // else 
       //  // {

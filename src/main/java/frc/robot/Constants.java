@@ -76,6 +76,9 @@ public final class Constants {
  public static double L4Angle = 5;
  public static double CoralStationAngle= 1;
 
+ public static double CoralMaximum=1;
+ public static double CoralMinimum=0;
+
 
  //PID
  public static int Pvar = 1;
