@@ -10,12 +10,14 @@ import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.events.EventTrigger;
-import com.pathplanner.lib.events.PointTowardsZoneTrigger;
-import com.pathplanner.lib.path.PathPlannerPath;
+//import com.pathplanner.lib.auto.AutoBuilder;
+//import com.pathplanner.lib.auto.NamedCommands;
+//import com.pathplanner.lib.commands.PathPlannerAuto;
+//import com.pathplanner.lib.events.EventTrigger;
+//import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+//import com.pathplanner.lib.path.PathPlannerPath;
+
+
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.DeepClimbMechanismSubsystem;
@@ -99,18 +101,18 @@ public class RobotContainer {
 
    // }
 
-private final SendableChooser<Command> autoChooser;
+//private final SendableChooser<Command> autoChooser;
 
 public RobotContainer() {
     
  
 
 
-    NamedCommands.registerCommand("CoralCollection", reefSubsystem.AlgaeCollectionMethod() );
+    //NamedCommands.registerCommand("CoralCollection", reefSubsystem.AlgaeCollectionMethod() );
  
-    new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
+   // new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
 
-    new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
+    //new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
    
   //  new EventTrigger("ElevatorStop").whileTrue(reefSubsystem.ElevatorStopCommand());
 
@@ -124,12 +126,12 @@ public RobotContainer() {
      configureBindings();
 
            // Build an auto chooser. This will use Commands.none() as the default option.
-    autoChooser = AutoBuilder.buildAutoChooser();
+   // autoChooser = AutoBuilder.buildAutoChooser();
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    //SmartDashboard.putData("Auto Chooser", autoChooser);
 
   
    
@@ -180,24 +182,24 @@ public RobotContainer() {
     mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());}
     
 
-  }
+  }}
 
-  public Command getAutonomousCommand() {
+  //public Command getAutonomousCommand() {
 
-  try{
+  //try{
         // Load the path you want to follow using its name in the GUI
-        PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
+      //  PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
 
         // Create a path following command using AutoBuilder. This will also trigger event markers.
-        return AutoBuilder.followPath(path);
-    } catch (Exception e) {
-        DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
-        return Commands.none();
-    }
+      //  return AutoBuilder.followPath(path);
+  //  } catch (Exception e) {
+     //   DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+       // return Commands.none();
+ //   }
 
     //return autoChooser.getSelected();
-}
-}
+//}
+//}
 
 
 

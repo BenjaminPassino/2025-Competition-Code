@@ -84,7 +84,13 @@ public class ReefMechanismSubsystem extends SubsystemBase{
 
               SmartDashboard.putNumber("ElevatorEncoder",Constants.ElevatorHeight);
               SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
-              
+              SmartDashboard.putNumber("ElevatorP",Constants.Pvar);
+              SmartDashboard.putNumber("ElevatorI",Constants.Ivar);
+              SmartDashboard.putNumber("ElevatorD",Constants.Dvar);
+              SmartDashboard.putNumber("VVristP",Constants.wPvar);
+              SmartDashboard.putNumber("VVristI",Constants.wIvar);
+              SmartDashboard.putNumber("VVristD",Constants.wDvar);
+            
           
 
   }
