@@ -43,13 +43,13 @@ public final class Constants {
   //DEEP CLIMB SPARK
   public static final int DeepClimbMotorPort = 25; //CAN
   //DEEP CLIMB SERVO
-  public static final int DeepClimbServoPort = 6;
+  public static final int DeepClimbServoPort = 4;
   
   //Limit Switch
   public static final int CoralArmLimitSwitchPort = 0;
   public static final int ElevatorBottomLimitSwitchPort = 9;
  // public static final int DeepClimbArmLimitSwitchPort = 3;
-  public static final int DeepClimbCageLimitSwitchPort = 4;
+  public static final int DeepClimbCageLimitSwitchPort = 6;
   //end of mech items
 
   /*    Motor Speeds     */
@@ -110,11 +110,11 @@ public final class Constants {
 
 
   //CLIMB
+  public static double ReleasePortSpeed = -0.2;
 
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 1;
-    
   }
 
 

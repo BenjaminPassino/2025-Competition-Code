@@ -53,13 +53,20 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               );
        }
 
+       public Command DeepClimbRelease(){
+              return run(
+              () -> {
+                     DeepClimbMotor.set(Constants.ReleasePortSpeed);
+              }
+              );
+       }
 
        // may not work
        public Command DeepClimbGrab() { // grabs onto cage with ratchet
               return run(
               () -> {
                     System.out.println("deep climb grabbing works");
-                     DeepClimbServo.set(.2);
+                     DeepClimbServo.set(.6);
                      }  
               );
        }
@@ -97,7 +104,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
           public Command DeepClimbLift(){
               return run(
                   () -> {
-                     if (DeepClimbCageLimitSwitch.get()); //checks for coral limit switch
+                    // if (DeepClimbCageLimitSwitch.get()); //checks for coral limit switch
                      System.out.println("deep climb lift works");
                      DeepClimbMotor.set(.2); // lifts robot when ratchet is in place
                   }   
