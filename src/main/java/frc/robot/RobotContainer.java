@@ -159,9 +159,9 @@ public class RobotContainer {
 
         mechController.povDown().whileTrue(deepClimbSubsystem.DeepClimbRelease());
     
-        mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod());
+        mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).onFalse(reefSubsystem.CoralStop());
     
-        mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod());
+        mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).onFalse(reefSubsystem.CoralStop());
     
         mechController.start().whileTrue(reefSubsystem.StopMethod());
         mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());

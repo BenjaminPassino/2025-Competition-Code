@@ -97,7 +97,7 @@ public final class Constants {
  //ENCODER
 
  public static double Distance = 1;
- public static double ElevatorHeight = 0;
+ //public static double ElevatorHeight = 0;
  public static double VVristPosition = 0;
 
 

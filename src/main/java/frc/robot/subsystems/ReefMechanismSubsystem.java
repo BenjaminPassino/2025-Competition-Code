@@ -84,7 +84,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                 SmartDashboard.putNumber("L3",Constants.L3Height);
                 SmartDashboard.putNumber("L4",Constants.L4Height);
               
-                SmartDashboard.putNumber("ElevatorEncoder",Constants.ElevatorHeight);
+                SmartDashboard.putNumber("ElevatorEncoder",0);
                 SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
                 SmartDashboard.putNumber("ElevatorP",Constants.Pvar);
                 SmartDashboard.putNumber("ElevatorI",Constants.Ivar);
@@ -264,31 +264,39 @@ public Command Updater(){ //updates smart dashboard values
           () -> {
             ElevatorMotor.set((RobotContainer.mechController.getRightY())/2);
             SmartDashboard.putNumber("ElevatorManualSpeed",(RobotContainer.mechController.getRightY())/2);  //Puts values to smart dashboard
-
+            SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getAbsoluteEncoder().getPosition());
           }
         );
       }
-
+      
       public Command CoralManual() //manually controls coral arm
       {
         return run(
           () -> {
-            SmartDashboard.putNumber("VVristManualSpeed",(RobotContainer.mechController.getLeftY())/2);
-            SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmMotor.getAbsoluteEncoder().getPosition());
-            if (CoralArmMotor.getAbsoluteEncoder().getPosition()>Constants.CoralMaximum){
-              CoralArmMotor.set(-0.1);
-            }
-            if (CoralArmMotor.getAbsoluteEncoder().getPosition()<Constants.CoralMinimum){
-              CoralArmMotor.set(0.1);
-            }
-            else 
-            {
-            CoralArmMotor.set((RobotContainer.mechController.getLeftY())/2);
-          }
+            
+         //   SmartDashboard.putNumber("VVristManualSpeed",(RobotContainer.mechController.getLeftY())/100);
+            SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmMotor.getAbsoluteEncoder().getPosition()));
+        //    if (CoralArmMotor.getAbsoluteEncoder().getPosition()>Constants.CoralMaximum){
+         //     CoralArmMotor.set(-0.1);
+         //   }
+         //   if (CoralArmMotor.getAbsoluteEncoder().getPosition()<Constants.CoralMinimum){
+         //     CoralArmMotor.set(0.1);
+         //   }
+         //   else 
+         //   {
+            CoralArmMotor.set(-((RobotContainer.mechController.getLeftY())/20));
+       //   }
         }
         );
       }
 
+      public Command CoralStop(){
+        return run(
+          () -> {
+              CoralScoringMotor.set(0);
+          }
+        );
+      }
       //STOP
     //  public void ElevatorStopMethod() // may not need 
    //   {
@@ -350,7 +358,7 @@ public Command ElevatorPIDMovement(double setpoint){
       
         //double targetPosition = Constants.TARGETPOSITION;
         ElevatorPID.setReference(setpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-        SmartDashboard.putNumber("ElevatorHeight",Constants.ElevatorHeight);
+        SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getAbsoluteEncoder().getPosition());
 
     }
   );
