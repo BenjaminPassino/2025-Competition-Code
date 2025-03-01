@@ -71,6 +71,7 @@ public class RobotContainer {
      
       public RobotContainer() {
         configureBindings();
+      
     }
 
 
@@ -142,9 +143,9 @@ public class RobotContainer {
   //  else{
       mechController.leftStick().whileTrue(reefSubsystem.CoralManual());
   // }
-        mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod());
-    
-        mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()); 
+        mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod()).onFalse(reefSubsystem.AlgaeStop());
+
+        mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()).onFalse(reefSubsystem.AlgaeStop());
     
         mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbGrab2());
     
@@ -164,6 +165,7 @@ public class RobotContainer {
     
         mechController.start().whileTrue(reefSubsystem.StopMethod());
         mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+      
         
     
       }
@@ -173,6 +175,7 @@ public class RobotContainer {
    // }
 
 //private final SendableChooser<Command> autoChooser;
+
 
 public void RobotContainerTWO() {
     

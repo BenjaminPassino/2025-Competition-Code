@@ -110,7 +110,7 @@ public final class Constants {
 
 
   //CLIMB
-  public static double ReleasePortSpeed = -0.2;
+  public static double ReleasePortSpeed = -0.1;
 
 
   public static class OperatorConstants {

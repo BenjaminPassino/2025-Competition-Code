@@ -65,37 +65,37 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                     
               //    }
             
-            public Command Setup(){
-              return run(
+              public Command Setup(){
+                return run(
                 () -> {
-              SmartDashboard.putNumber("CoralScoringSpeed",Constants.CoralScoringSpeed);  //Puts values to smart dashboard
-              SmartDashboard.putNumber("CoralArmSpeed",Constants.CoralArmSpeed);
-              SmartDashboard.putNumber("CoralCollectionSpeed",Constants.CoralCollectionSpeed);
-              SmartDashboard.putNumber("CoralCollectionArmSpeed",Constants.CoralCollectionArmSpeed);
-              SmartDashboard.putNumber("AlgaeCollectionSpeed",Constants.AlgaeCollectionSpeed);
-              SmartDashboard.putNumber("AlgaeScoringSpeed",Constants.AlgaeScoringSpeed);
-              SmartDashboard.putNumber("ElevatorUpSpeed",Constants.ElevatorUpSpeed);
-              SmartDashboard.putNumber("ElevatorDownSpeed",Constants.ElevatorDownSpeed);
+                
 
-              SmartDashboard.putNumber("L1",Constants.L1Height);
-              SmartDashboard.putNumber("L2",Constants.L2Height);
-              SmartDashboard.putNumber("L3",Constants.L3Height);
-              SmartDashboard.putNumber("L4",Constants.L4Height);
-
-              SmartDashboard.putNumber("ElevatorEncoder",Constants.ElevatorHeight);
-              SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
-              SmartDashboard.putNumber("ElevatorP",Constants.Pvar);
-              SmartDashboard.putNumber("ElevatorI",Constants.Ivar);
-              SmartDashboard.putNumber("ElevatorD",Constants.Dvar);
-              SmartDashboard.putNumber("VVristP",Constants.wPvar);
-              SmartDashboard.putNumber("VVristI",Constants.wIvar);
-              SmartDashboard.putNumber("VVristD",Constants.wDvar);
-            
-          
-
-  }
-);
-          }
+                SmartDashboard.putNumber("CoralScoringSpeed",Constants.CoralScoringSpeed);  //Puts values to smart dashboard
+                SmartDashboard.putNumber("CoralArmSpeed",Constants.CoralArmSpeed);
+                SmartDashboard.putNumber("CoralCollectionSpeed",Constants.CoralCollectionSpeed);
+                SmartDashboard.putNumber("CoralCollectionArmSpeed",Constants.CoralCollectionArmSpeed);
+                SmartDashboard.putNumber("AlgaeCollectionSpeed",Constants.AlgaeCollectionSpeed);
+                SmartDashboard.putNumber("AlgaeScoringSpeed",Constants.AlgaeScoringSpeed);
+                SmartDashboard.putNumber("ElevatorUpSpeed",Constants.ElevatorUpSpeed);
+                SmartDashboard.putNumber("ElevatorDownSpeed",Constants.ElevatorDownSpeed);
+              
+                SmartDashboard.putNumber("L1",Constants.L1Height);
+                SmartDashboard.putNumber("L2",Constants.L2Height);
+                SmartDashboard.putNumber("L3",Constants.L3Height);
+                SmartDashboard.putNumber("L4",Constants.L4Height);
+              
+                SmartDashboard.putNumber("ElevatorEncoder",Constants.ElevatorHeight);
+                SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
+                SmartDashboard.putNumber("ElevatorP",Constants.Pvar);
+                SmartDashboard.putNumber("ElevatorI",Constants.Ivar);
+                SmartDashboard.putNumber("ElevatorD",Constants.Dvar);
+                SmartDashboard.putNumber("VVristP",Constants.wPvar);
+                SmartDashboard.putNumber("VVristI",Constants.wIvar);
+                SmartDashboard.putNumber("VVristD",Constants.wDvar);
+              
+              }
+                );
+              }
 
 public Command Updater(){ //updates smart dashboard values
   return run(
@@ -223,6 +223,15 @@ public Command Updater(){ //updates smart dashboard values
             LeftAlgaeMotor.set(-speed);
             RightAlgaeMotor.set(speed);
           }
+
+          public Command AlgaeStop(){
+            return run(
+              () -> {
+                LeftAlgaeMotor.set(0);
+                RightAlgaeMotor.set(0);
+              }
+            );
+          }
     
     
     /* ELEVATOR */
@@ -264,15 +273,19 @@ public Command Updater(){ //updates smart dashboard values
       {
         return run(
           () -> {
-          
+            SmartDashboard.putNumber("VVristManualSpeed",(RobotContainer.mechController.getLeftY())/2);
+            SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmMotor.getAbsoluteEncoder().getPosition());
             if (CoralArmMotor.getAbsoluteEncoder().getPosition()>Constants.CoralMaximum){
               CoralArmMotor.set(-0.1);
             }
             if (CoralArmMotor.getAbsoluteEncoder().getPosition()<Constants.CoralMinimum){
               CoralArmMotor.set(0.1);
             }
-            else CoralArmMotor.set((RobotContainer.mechController.getLeftY())/2);
+            else 
+            {
+            CoralArmMotor.set((RobotContainer.mechController.getLeftY())/2);
           }
+        }
         );
       }
 

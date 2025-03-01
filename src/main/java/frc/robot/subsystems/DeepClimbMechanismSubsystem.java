@@ -106,7 +106,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
                   () -> {
                     // if (DeepClimbCageLimitSwitch.get()); //checks for coral limit switch
                      System.out.println("deep climb lift works");
-                     DeepClimbMotor.set(.2); // lifts robot when ratchet is in place
+                     DeepClimbMotor.set(.8); // lifts robot when ratchet is in place
                   }   
               );
           }
