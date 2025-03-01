@@ -66,7 +66,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               return run(
               () -> {
                     System.out.println("deep climb grabbing works");
-                     DeepClimbServo.set(.6);
+                     DeepClimbServo.set(.2);
                      }  
               );
        }
@@ -74,7 +74,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               return run(
               () -> {
                     System.out.println("deep climb grabbing works");
-                     DeepClimbServo.set(.8);
+                     DeepClimbServo.set(.4);
                      }  
               );
        }
@@ -116,7 +116,6 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               return run(
               () -> {
                      DeepClimbMotor.set(0);
-                     DeepClimbServo.set(0);
                      System.out.println("stop 2 works");
 
               }

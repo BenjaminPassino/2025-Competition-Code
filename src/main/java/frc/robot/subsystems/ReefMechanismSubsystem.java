@@ -1,23 +1,23 @@
 package frc.robot.subsystems;
 
 
-import edu.wpi.first.hal.CANAPITypes.CANDeviceType;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.CAN;
+// import edu.wpi.first.hal.CANAPITypes.CANDeviceType;
+// import edu.wpi.first.math.controller.PIDController;
+// import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.XboxController;
+// import edu.wpi.first.wpilibj.Encoder;
+// import edu.wpi.first.wpilibj.RobotController;
+// import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+// import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.RobotContainer;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.RelativeEncoder;
+// import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -123,11 +123,12 @@ public Command Updater(){ //updates smart dashboard values
                   public Command CoralScoringMethod() { 
                     return run(
                       () -> {
-                        System.out.println("coral scoring works");
+      //                  System.out.println("coral scoring works");
               //      if (ArmScoringPosition())
                //     {
                         CoralScoringMotor.set(Constants.CoralScoringSpeed);
-                    });
+                          }
+                    );
                   }
         
         
@@ -135,7 +136,7 @@ public Command Updater(){ //updates smart dashboard values
                 public Command EncoderCheck(){
                   return run(
         ()->{
-     //   EncoderDistance=ElevatorEncoder.getRate();
+    /* / //  EncoderDistance=ElevatorEncoder.getRate(); */
         SmartDashboard.putNumber("EncoderDistance", EncoderDistance);
 }
         
@@ -160,7 +161,7 @@ public Command Updater(){ //updates smart dashboard values
           public Command CoralCollectionMethod() { 
             return run(
               () -> {
-                System.out.println("coral collection works");
+     //           System.out.println("coral collection works");
       //      if (ArmCollectionPosition())
         //
         ////    {
@@ -201,7 +202,7 @@ public Command Updater(){ //updates smart dashboard values
           public Command AlgaeCollectionMethod() {
           return run(
            () -> {
-          System.out.println("algae collection works");
+         // System.out.println("algae collection works");
             AlgaeMotorControl(Constants.AlgaeCollectionSpeed);
            }); 
           }
@@ -212,7 +213,7 @@ public Command Updater(){ //updates smart dashboard values
             return run (
               () -> {
             AlgaeMotorControl(Constants.AlgaeScoringSpeed);
-            System.out.println("algae scoring works");
+       //     System.out.println("algae scoring works");
               });
           }
     
@@ -253,6 +254,8 @@ public Command Updater(){ //updates smart dashboard values
         return run(
           () -> {
             ElevatorMotor.set((RobotContainer.mechController.getRightY())/2);
+            SmartDashboard.putNumber("ElevatorManualSpeed",(RobotContainer.mechController.getRightY())/2);  //Puts values to smart dashboard
+
           }
         );
       }
@@ -286,7 +289,7 @@ public Command Updater(){ //updates smart dashboard values
     //        ElevatorBottomLimitSwitch.get();
         if (RobotContainer.ElevatorBottomLimitSwitch.get())
         
-        ElevatorMotor.set(0);
+         ElevatorMotor.set(0);
           ElevatorMotor.getEncoder().setPosition(0);
 
         }
