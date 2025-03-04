@@ -166,7 +166,8 @@ public class RobotContainer {
         mechController.start().whileTrue(reefSubsystem.StopMethod());
         mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
       
-        
+      joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
+      joystick.y().onTrue(reefSubsystem.Setup());
     
       }
 

@@ -81,14 +81,14 @@ public final class Constants {
 
 
  //PID
- public static int Pvar = 1;
- public static int Ivar = 1;
- public static int Dvar = 1; 
+ public static double Pvar = 1;
+ public static double Ivar = 1;
+ public static double Dvar = 1; 
  public static double TARGETPOSITION=1;
 
- public static int wPvar = 1;
- public static int wIvar = 1;
- public static int wDvar = 1; 
+ public static double wPvar = 1;
+ public static double wIvar = 1;
+ public static double wDvar = 1; 
 
  public static int cPvar = 1;
  public static int cIvar = 1;

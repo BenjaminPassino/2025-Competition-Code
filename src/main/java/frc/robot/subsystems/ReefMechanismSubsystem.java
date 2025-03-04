@@ -1,11 +1,10 @@
 package frc.robot.subsystems;
 
-
-// import edu.wpi.first.hal.CANAPITypes.CANDeviceType;
-// import edu.wpi.first.math.controller.PIDController;
-// import edu.wpi.first.wpilibj.CAN;
+ import edu.wpi.first.hal.CANAPITypes.CANDeviceType;
+ import edu.wpi.first.math.controller.PIDController;
+ import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalInput;
-// import edu.wpi.first.wpilibj.Encoder;
+ import edu.wpi.first.wpilibj.Encoder;
 // import edu.wpi.first.wpilibj.RobotController;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
@@ -17,13 +16,15 @@ import frc.robot.RobotContainer;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
-// import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+
 
 import frc.robot.Constants;
 
@@ -37,6 +38,9 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static SparkMax CoralArmMotor = new SparkMax(Constants.CoralArmMotorPort,MotorType.kBrushless);
     //Elevator motor
     private final static SparkMax ElevatorMotor = new SparkMax(Constants.ElevatorMotorPort,MotorType.kBrushless);
+   // private final static FeedbackSensor ElevatorFeedback = new FeedbackSensor(ElevatorMotor.getAbsoluteEncoder());
+ private RelativeEncoder ElevatorEncoder = ElevatorMotor.getEncoder();
+ private RelativeEncoder CoralArmEncoder = CoralArmMotor.getEncoder();
     
         /* Limit Switch */
        
@@ -66,7 +70,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
               //    }
             
               public Command Setup(){
-                return run(
+                return runOnce(
                 () -> {
                 
 
@@ -84,7 +88,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                 SmartDashboard.putNumber("L3",Constants.L3Height);
                 SmartDashboard.putNumber("L4",Constants.L4Height);
               
-                SmartDashboard.putNumber("ElevatorEncoder",0);
+                //SmartDashboard.putNumber("ElevatorEncoder",);
                 SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
                 SmartDashboard.putNumber("ElevatorP",Constants.Pvar);
                 SmartDashboard.putNumber("ElevatorI",Constants.Ivar);
@@ -98,7 +102,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
               }
 
 public Command Updater(){ //updates smart dashboard values
-  return run(
+  return runOnce(
 () -> {
   Constants.CoralScoringSpeed = (SmartDashboard.getNumber("CoralScoringSpeed",Constants.CoralScoringSpeed));
   Constants.CoralArmSpeed = (SmartDashboard.getNumber("CoralArmSpeed",Constants.CoralArmSpeed));
@@ -113,6 +117,12 @@ public Command Updater(){ //updates smart dashboard values
   Constants.L2Height = (SmartDashboard.getNumber("L2Height",Constants.L2Height));
   Constants.L3Height = (SmartDashboard.getNumber("L3Height",Constants.L3Height));
   Constants.L4Height = (SmartDashboard.getNumber("L4Height",Constants.L4Height));
+
+  Constants.Pvar = (SmartDashboard.getNumber("ElevatorP", Constants.Pvar));
+  Constants.Ivar = (SmartDashboard.getNumber("ElevatorI", Constants.Ivar));
+  Constants.Dvar = (SmartDashboard.getNumber("ElevatorD", Constants.Dvar));
+
+
 
 }
   );
@@ -264,7 +274,7 @@ public Command Updater(){ //updates smart dashboard values
           () -> {
             ElevatorMotor.set((RobotContainer.mechController.getRightY())/2);
             SmartDashboard.putNumber("ElevatorManualSpeed",(RobotContainer.mechController.getRightY())/2);  //Puts values to smart dashboard
-            SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getAbsoluteEncoder().getPosition());
+            SmartDashboard.putNumber("ElevatorHeight",ElevatorEncoder.getPosition());
           }
         );
       }
@@ -275,7 +285,7 @@ public Command Updater(){ //updates smart dashboard values
           () -> {
             
          //   SmartDashboard.putNumber("VVristManualSpeed",(RobotContainer.mechController.getLeftY())/100);
-            SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmMotor.getAbsoluteEncoder().getPosition()));
+            SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmEncoder.getPosition()));
         //    if (CoralArmMotor.getAbsoluteEncoder().getPosition()>Constants.CoralMaximum){
          //     CoralArmMotor.set(-0.1);
          //   }
@@ -311,7 +321,7 @@ public Command Updater(){ //updates smart dashboard values
         if (RobotContainer.ElevatorBottomLimitSwitch.get())
         
          ElevatorMotor.set(0);
-          ElevatorMotor.getEncoder().setPosition(0);
+          //ElevatorMotor.getEncoder().setPosition(0);
 
         }
         );
@@ -338,7 +348,6 @@ public Command ElevatorPIDSetup(){
   return run(
     () -> {
       motorconfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .p(Constants.Pvar)
       .i(Constants.Ivar)
       .d(Constants.Dvar)
@@ -373,7 +382,7 @@ public Command elevatorStop()
 }
 
 public Command VVristPIDSetup(){
-  return run(
+  return runOnce(
     () -> {
       VVristMotorconfig.closedLoop
       .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
