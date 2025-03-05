@@ -27,6 +27,12 @@
           "data": {
             "pathName": "Copy of New Path"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.0
+          }
         }
       ]
     }

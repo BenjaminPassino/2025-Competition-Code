@@ -6,21 +6,35 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 //import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 
 
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+ // private Command m_autonomousCommand;
 
-  private final RobotContainer m_robotContainer;
+
+  private final AddressableLED m_led;
+  private final AddressableLEDBuffer m_ledBuffer;
 
   public Robot() {
-    m_robotContainer = new RobotContainer();
+     
+    m_led = new AddressableLED(9);
+
+    m_ledBuffer = new AddressableLEDBuffer(60);
+    m_led.setLength(m_ledBuffer.getLength());
+
+    m_led.setData(m_ledBuffer);
+    m_led.start();
   }
 
 @Override
@@ -77,11 +91,11 @@ public void robotInit() {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+   // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+  //  if (m_autonomousCommand != null) {
+   //   m_autonomousCommand.schedule();
+  //  }
   }
 
   @Override
@@ -92,15 +106,15 @@ public void robotInit() {
 
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+   // if (m_autonomousCommand != null) {
+   //   m_autonomousCommand.cancel();
+   //// }
   }
 
   @Override
   public void teleopPeriodic() {
 
-    PowerDistribution();
+   // PowerDistribution();
   }
 
 
