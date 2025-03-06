@@ -347,6 +347,7 @@ public Command Updater(){ //updates smart dashboard values
 public Command ElevatorPIDSetup(){
   return run(
     () -> {
+      System.out.println("i work sort of");
       motorconfig.closedLoop
       .p(Constants.Pvar)
       .i(Constants.Ivar)

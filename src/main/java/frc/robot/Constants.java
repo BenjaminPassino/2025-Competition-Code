@@ -65,16 +65,16 @@ public final class Constants {
  public static double ElevatorUpSpeed = 0.5;
  public static double ElevatorDownSpeed = -0.5;
 
- public static double L1Height = 2;
- public static double L2Height = 3;
- public static double L3Height = 4;
- public static double L4Height = 5;
- public static double CoralStationHeight= 1;
- public static double L1Angle = 2;
- public static double L2Angle = 3;
- public static double L3Angle = 4;
- public static double L4Angle = 5;
- public static double CoralStationAngle= 1;
+ public static double L1Height = -33.8;
+ public static double L2Height = -64.7;
+ public static double L3Height = -119.5;
+ public static double L4Height = -193.6;
+ public static double CoralStationHeight= -33.8; //set to l1 height
+ public static double L1Angle = -11.1;
+ public static double L2Angle = -11.1;
+ public static double L3Angle = -11.1;
+ public static double L4Angle = -10.2;
+ public static double CoralStationAngle= -10.2; //set to l4 angle
 
  public static double CoralMaximum=1;
  public static double CoralMinimum=0;
