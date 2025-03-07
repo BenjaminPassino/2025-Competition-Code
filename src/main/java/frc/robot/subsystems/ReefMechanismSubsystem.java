@@ -73,7 +73,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                 return runOnce(
                 () -> {
                 
-
+                  System.out.println("i also work too yay :)");
                 SmartDashboard.putNumber("CoralScoringSpeed",Constants.CoralScoringSpeed);  //Puts values to smart dashboard
                 SmartDashboard.putNumber("CoralArmSpeed",Constants.CoralArmSpeed);
                 SmartDashboard.putNumber("CoralCollectionSpeed",Constants.CoralCollectionSpeed);
@@ -383,10 +383,10 @@ public Command elevatorStop()
 }
 
 public Command VVristPIDSetup(){
-  return runOnce(
+  return run(
     () -> {
+      System.out.println("wrist works ish");
       VVristMotorconfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
       .p(Constants.wPvar)
       .i(Constants.wIvar)
       .d(Constants.wDvar)
@@ -396,6 +396,7 @@ public Command VVristPIDSetup(){
     SmartDashboard.setDefaultNumber("TargetVelocity",0);
     SmartDashboard.setDefaultBoolean("Control Mode",false);
     SmartDashboard.setDefaultBoolean("Reset Encoder",false);
+    System.out.println("AAAAAAAAAAAAAAAAAAAAA");
     }
 );
 }
@@ -406,8 +407,9 @@ public Command VVristPIDMovement(double VVristsetpoint){
       
         //double targetPosition = Constants.TARGETPOSITION;
         VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        
         SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
-
+        
     }
   );
 }

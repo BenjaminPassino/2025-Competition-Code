@@ -86,9 +86,9 @@ public final class Constants {
  public static double Dvar = 1; 
  public static double TARGETPOSITION=1;
 
- public static double wPvar = 1;
- public static double wIvar = 1;
- public static double wDvar = 1; 
+ public static double wPvar = 100;
+ public static double wIvar = 0;
+ public static double wDvar = 0; 
 
  public static int cPvar = 1;
  public static int cIvar = 1;

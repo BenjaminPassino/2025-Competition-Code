@@ -107,23 +107,23 @@ public class RobotContainer {
         Trigger ElevatorLimitSwitchTrigger = new Trigger(ElevatorBottomLimitSwitch::get);
 
 
-        if (mechController.getRightY()<0.2){
+      //  if (mechController.getRightY()<0.2){
 
           //mechController.x().whileTrue(reefSubsystem.SetToL2());
-          mechController.x().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height));
+       //   mechController.x().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height));
     
           //mechController.y().whileTrue(reefSubsystem.SetToL4());
-          mechController.y().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height));
+       //   mechController.y().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height));
     
           //mechController.a().whileTrue(reefSubsystem.SetToL1());
-          mechController.a().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height));
+        //  mechController.a().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height));
     
           //mechController.b().whileTrue(reefSubsystem.SetToL3());
-          mechController.b().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height));
+         // mechController.b().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height));
     
-          mechController.back().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
+       //   mechController.back().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
           //  mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement());
-        }
+     //   }
        // else{
           mechController.rightStick().whileTrue(reefSubsystem.ElevatorManual());
       //  }
@@ -166,8 +166,9 @@ public class RobotContainer {
         mechController.start().whileTrue(reefSubsystem.StopMethod());
         mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
       
-      joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
-      joystick.y().onTrue(reefSubsystem.Setup());
+      //joystick.y();
+      //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
+      joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup());
     
       }
 
