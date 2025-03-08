@@ -433,50 +433,50 @@ public Command StopMethod()
 }
 
 // sets targetposition to the different heights
-public Command SetToL1()
-{
-  return run (
-() -> {
-  Constants.TARGETPOSITION = Constants.L1Height;
-}
-  );
-}
+// public Command SetToL1()
+// {
+//   return run (
+// () -> {
+//   Constants.TARGETPOSITION = Constants.L1Height;
+// }
+//   );
+// }
 
-public Command SetToL2()
-{
-  return run (
-() -> {
-  Constants.TARGETPOSITION = Constants.L2Height;
-}
-  );
-}
+// public Command SetToL2()
+// {
+//   return run (
+// () -> {
+//   Constants.TARGETPOSITION = Constants.L2Height;
+// }
+//   );
+// }
 
-public Command SetToL3()
-{
-  return run (
-() -> {
-  Constants.TARGETPOSITION = Constants.L3Height;
-}
-  );
-}
+// public Command SetToL3()
+// {
+//   return run (
+// () -> {
+//   Constants.TARGETPOSITION = Constants.L3Height;
+// }
+//   );
+// }
 
-public Command SetToL4()
-{
-  return run (
-() -> {
-  Constants.TARGETPOSITION = Constants.L4Height;
-}
-  );
-}
+// public Command SetToL4()
+// {
+//   return run (
+// () -> {
+//   Constants.TARGETPOSITION = Constants.L4Height;
+// }
+//   );
+// }
 
-public Command SetToCoralStation()
-{
-  return run (
-() -> {
-  Constants.TARGETPOSITION = Constants.CoralStationHeight;
-}
-  );
-}
+// public Command SetToCoralStation()
+// {
+//   return run (
+// () -> {
+//   Constants.TARGETPOSITION = Constants.CoralStationHeight;
+// }
+//   );
+// }
 
 /* DEEP CLIMB */
 
