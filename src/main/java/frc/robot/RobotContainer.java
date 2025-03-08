@@ -37,6 +37,7 @@ import frc.robot.commands.AutoCoralCollection;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoCommands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.MechCamera;
 //import com.pathplanner.lib.pathfinding;
 
 
@@ -71,6 +72,7 @@ public class RobotContainer {
    // private final SendableChooser<Command> autoChooser;
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final MechCamera mechCamera = new MechCamera();
  public final static CommandXboxController mechController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
@@ -81,6 +83,9 @@ public class RobotContainer {
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
+      
+        mechCamera.setDefaultCommand(mechCamera.Camera());
+
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
