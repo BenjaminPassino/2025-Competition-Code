@@ -46,6 +46,7 @@ import frc.robot.subsystems.MechCamera;
 public class RobotContainer {
   private final ReefMechanismSubsystem reefSubsystem = new ReefMechanismSubsystem();
   private final DeepClimbMechanismSubsystem deepClimbSubsystem = new DeepClimbMechanismSubsystem();
+  public static DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
 
   //NamedCommands.registerCommand("CoralCollection", reefSubsystem.AlgaeCollectionMethod() );
  
@@ -78,6 +79,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureBindings();
+    configureButtonBindings();
 }
 
     private void configureBindings() {
@@ -119,6 +121,70 @@ public class RobotContainer {
 
    private void configureButtonBindings(){
 
+    //if (mechController.getRightY()<0.2){
+
+      //mechController.x().whileTrue(reefSubsystem.SetToL2());
+     mechController.x().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height));
+
+      //mechController.y().whileTrue(reefSubsystem.SetToL4());
+      mechController.y().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height));
+
+      //mechController.a().whileTrue(reefSubsystem.SetToL1());
+      mechController.a().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height));
+
+      //mechController.b().whileTrue(reefSubsystem.SetToL3());
+      mechController.b().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height));
+
+   //   mechController.back().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
+      //  mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement());
+    //}
+   // else{
+      mechController.rightStick().whileTrue(reefSubsystem.ElevatorManual());
+  //  }
+
+  //  if (mechController.getLeftY()<0.2)
+//{
+  mechController.x().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L2Angle));
+
+  mechController.y().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
+
+  mechController.a().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L1Angle));
+
+  mechController.b().whileTrue(reefSubsystem.VVristPIDMovement(Constants.L3Angle));
+
+  mechController.back().whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
+//}
+//  else{
+  mechController.leftStick().whileTrue(reefSubsystem.CoralManual());
+// }
+    mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod()).onFalse(reefSubsystem.AlgaeStop());
+
+    mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()).onFalse(reefSubsystem.AlgaeStop());
+
+    mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbNotGrab());
+  
+
+    mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());
+    mechController.povCenter().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+    
+  //      .or(mechController.povDown()).whileTrue(deepClimbSubsystem.DeepClimbRelease())
+  //      .whileFalse(deepClimbSubsystem.DeepClimbStopMethod());//rotate clockwise
+
+    mechController.povRight().whileTrue(deepClimbSubsystem.DeepClimbGrab());//ratchet
+
+    mechController.povDown().whileTrue(deepClimbSubsystem.DeepClimbRelease());
+
+    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).onFalse(reefSubsystem.CoralStop());
+
+    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).onFalse(reefSubsystem.CoralStop());
+
+    mechController.start().whileTrue(reefSubsystem.StopMethod());
+    mechController.start().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+  
+  //joystick.y();
+  //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
+  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.VVristPIDMovement(Constants.ZeroedAngle)).onTrue(reefSubsystem.ElevatorPIDSetup());
+  
    }
 
 

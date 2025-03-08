@@ -313,19 +313,19 @@ public Command Updater(){ //updates smart dashboard values
    //   }
 
       //CHECKING IF ELEVATOR IS AT BOTTOM
-      //public Command ElevatorStopCommand()
-      //{
-       // return run(
-        //() -> {
-    //        ElevatorBottomLimitSwitch.get();
-        //if (RobotContainer.ElevatorBottomLimitSwitch.get())
+      public Command ElevatorStopCommand()
+      {
+        return run(
+        () -> {
+           RobotContainer.ElevatorBottomLimitSwitch.get();
+        if (RobotContainer.ElevatorBottomLimitSwitch.get())
         
-         //ElevatorMotor.set(0);
-          //ElevatorMotor.getEncoder().setPosition(0);
+         ElevatorMotor.set(0);
+          ElevatorMotor.getEncoder().setPosition(0);
 
-        //}
-        //);
-      //}
+        }
+        );
+      }
 
       // public boolean ElevatorPosition() // do not know if this works
       // {
