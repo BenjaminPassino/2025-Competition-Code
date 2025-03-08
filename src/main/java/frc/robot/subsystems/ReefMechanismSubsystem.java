@@ -52,8 +52,8 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         //private final Encoder CoralArmEncoder = new Encoder(5, 6); //
        // private final Encoder ElevatorEncoder = new Encoder(7,8);
         private double EncoderDistance =1;
-        private SparkMaxConfig motorconfig;
-        private SparkMaxConfig VVristMotorconfig;
+        private SparkMaxConfig motorconfig = new SparkMaxConfig();
+        private SparkMaxConfig VVristMotorconfig = new SparkMaxConfig();
         private SparkClosedLoopController ElevatorPID = ElevatorMotor.getClosedLoopController();
         private SparkClosedLoopController VVristPID = CoralArmMotor.getClosedLoopController();
 
@@ -348,6 +348,7 @@ public Command ElevatorPIDSetup(){
   return run(
     () -> {
       System.out.println("i work sort of");
+      ElevatorMotor.getEncoder().setPosition(0);
       motorconfig.closedLoop
       .p(Constants.Pvar)
       .i(Constants.Ivar)
@@ -368,7 +369,7 @@ public Command ElevatorPIDMovement(double setpoint){
       
         //double targetPosition = Constants.TARGETPOSITION;
         ElevatorPID.setReference(setpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-        SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getAbsoluteEncoder().getPosition());
+        SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getEncoder().getPosition());
 
     }
   );
@@ -383,9 +384,10 @@ public Command elevatorStop()
 }
 
 public Command VVristPIDSetup(){
-  return run(
+  return runOnce(
     () -> {
       System.out.println("wrist works ish");
+      CoralArmMotor.getEncoder().setPosition(0);
       VVristMotorconfig.closedLoop
       .p(Constants.wPvar)
       .i(Constants.wIvar)

@@ -2,12 +2,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+import frc.robot.RobotContainer;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -67,15 +68,17 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               () -> {
                     System.out.println("deep climb grabbing works");
                      DeepClimbServo.set(.2);
+                     RobotContainer.mechController.setRumble(RumbleType.kBothRumble, 0.2);
                      }  
               );
        }
-       public Command DeepClimbGrab2() { // grabs onto cage with ratchet
+       public Command DeepClimbNotGrab() { // grabs onto cage with ratchet
               return run(
               () -> {
                     System.out.println("deep climb grabbing works");
                      DeepClimbServo.set(.4);
-                     }  
+                     RobotContainer.mechController.setRumble(RumbleType.kBothRumble, 0);       
+              }  
               );
        }
 

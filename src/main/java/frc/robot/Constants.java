@@ -74,6 +74,7 @@ public final class Constants {
  public static double L2Angle = -11.1;
  public static double L3Angle = -11.1;
  public static double L4Angle = -10.2;
+ public static double ZeroedAngle = 0;
  public static double CoralStationAngle= -10.2; //set to l4 angle
 
  public static double CoralMaximum=1;
@@ -81,12 +82,12 @@ public final class Constants {
 
 
  //PID
- public static double Pvar = 1;
- public static double Ivar = 1;
- public static double Dvar = 1; 
+ public static double Pvar = 0.028;
+ public static double Ivar = 0;
+ public static double Dvar = 0; 
  public static double TARGETPOSITION=1;
 
- public static double wPvar = 100;
+ public static double wPvar = 0.028;
  public static double wIvar = 0;
  public static double wDvar = 0; 
 
