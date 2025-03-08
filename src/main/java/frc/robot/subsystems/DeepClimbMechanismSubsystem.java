@@ -68,7 +68,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               () -> {
                     System.out.println("deep climb grabbing works");
                      DeepClimbServo.set(.2);
-                     RobotContainer.mechController.setRumble(RumbleType.kBothRumble, 0.2);
+                     RobotContainer.mechController.setRumble(RumbleType.kBothRumble, 1);
                      }  
               );
        }

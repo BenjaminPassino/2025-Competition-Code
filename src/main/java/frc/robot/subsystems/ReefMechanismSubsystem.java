@@ -274,7 +274,7 @@ public Command Updater(){ //updates smart dashboard values
           () -> {
             ElevatorMotor.set((RobotContainer.mechController.getRightY())/2);
             if((RobotContainer.mechController.getRightY())/2 > -0.05 && (RobotContainer.mechController.getRightY())/2 < 0.05)
-              {ElevatorMotor.configure(motorconfig, null, null);}
+              {ElevatorMotor.set(0);}
             SmartDashboard.putNumber("ElevatorManualSpeed",(RobotContainer.mechController.getRightY())/2);  //Puts values to smart dashboard
             SmartDashboard.putNumber("ElevatorHeight",ElevatorEncoder.getPosition());
           }
@@ -349,7 +349,7 @@ public Command Updater(){ //updates smart dashboard values
 public Command ElevatorPIDSetup(){
   return runOnce(
     () -> {
-      System.out.println("i work sort of");
+      System.out.println("wrist works ish");
       ElevatorMotor.getEncoder().setPosition(0);
       motorconfig.closedLoop
       .p(Constants.Pvar)
@@ -361,6 +361,7 @@ public Command ElevatorPIDSetup(){
     SmartDashboard.setDefaultNumber("TargetVelocity",0);
     SmartDashboard.setDefaultBoolean("Control Mode",false);
     SmartDashboard.setDefaultBoolean("Reset Encoder",false);
+    System.out.println("AAAAAAAAAAAAAAAAAAAAA");
     }
 );
 }

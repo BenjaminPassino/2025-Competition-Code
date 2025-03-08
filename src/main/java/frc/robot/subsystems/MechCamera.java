@@ -21,18 +21,20 @@ public class MechCamera extends SubsystemBase {
 
   /** Called once at the beginning of the robot program. */
   public Command Camera() {
-        return run(
+        return runOnce(
             () -> {
                 
               // Get the UsbCamera from CameraServer
               UsbCamera camera = CameraServer.startAutomaticCapture();
               // Set the resolution
-              camera.setResolution(640, 480);
+              camera.setResolution(240, 160);
+              camera.setFPS(1);
 
               // Get a CvSink. This will capture Mats from the camera
               CvSink cvSink = CameraServer.getVideo();
               // Setup a CvSource. This will send images back to the Dashboard
-              CvSource outputStream = CameraServer.putVideo("Rectangle", 640, 480);
+              CvSource outputStream = CameraServer.putVideo("Rectangle", 240, 160);
+              
 
               // Mats are very memory expensive. Lets reuse this Mat.
               Mat matt = new Mat();

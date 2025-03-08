@@ -86,7 +86,7 @@ public class RobotContainer {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
       
-        mechCamera.setDefaultCommand(mechCamera.Camera());
+       
 
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
@@ -174,7 +174,7 @@ public class RobotContainer {
   
   //joystick.y();
   //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
-  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup());
+  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup()).onTrue(mechCamera.Camera());
   
    }
 
