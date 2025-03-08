@@ -273,6 +273,8 @@ public Command Updater(){ //updates smart dashboard values
         return run(
           () -> {
             ElevatorMotor.set((RobotContainer.mechController.getRightY())/2);
+            if((RobotContainer.mechController.getRightY())/2 > -0.05 && (RobotContainer.mechController.getRightY())/2 < 0.05)
+              {ElevatorMotor.configure(motorconfig, null, null);}
             SmartDashboard.putNumber("ElevatorManualSpeed",(RobotContainer.mechController.getRightY())/2);  //Puts values to smart dashboard
             SmartDashboard.putNumber("ElevatorHeight",ElevatorEncoder.getPosition());
           }
@@ -317,7 +319,7 @@ public Command Updater(){ //updates smart dashboard values
       {
         return run(
         () -> {
-           RobotContainer.ElevatorBottomLimitSwitch.get();
+          
         if (RobotContainer.ElevatorBottomLimitSwitch.get())
         
          ElevatorMotor.set(0);
@@ -345,7 +347,7 @@ public Command Updater(){ //updates smart dashboard values
 
 
 public Command ElevatorPIDSetup(){
-  return run(
+  return runOnce(
     () -> {
       System.out.println("i work sort of");
       ElevatorMotor.getEncoder().setPosition(0);
@@ -410,7 +412,7 @@ public Command VVristPIDMovement(double VVristsetpoint){
         //double targetPosition = Constants.TARGETPOSITION;
         VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
         
-        SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
+        SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
         
     }
   );

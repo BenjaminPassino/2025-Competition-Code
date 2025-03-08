@@ -45,7 +45,7 @@ public class MechCamera extends SubsystemBase {
                 // in the source mat.  If there is an error notify the output.
                 if (cvSink.grabFrame(matt) == 0) {
                   // Send the output the error.
-                  outputStream.notifyError(cvSink.getError());
+                //  outputStream.notifyError(cvSink.getError());
                   // skip the rest of the current iteration
                 }
                 }

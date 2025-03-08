@@ -46,10 +46,10 @@ public final class Constants {
   public static final int DeepClimbServoPort = 4;
   
   //Limit Switch
-  public static final int CoralArmLimitSwitchPort = 0;
-  public static final int ElevatorBottomLimitSwitchPort = 9;
+  public static final int CoralArmLimitSwitchPort = 1;
+  public static final int ElevatorBottomLimitSwitchPort = 2;
  // public static final int DeepClimbArmLimitSwitchPort = 3;
-  public static final int DeepClimbCageLimitSwitchPort = 6;
+  public static final int DeepClimbCageLimitSwitchPort = 0;
   //end of mech items
 
   /*    Motor Speeds     */
