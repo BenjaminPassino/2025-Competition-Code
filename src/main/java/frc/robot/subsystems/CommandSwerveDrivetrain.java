@@ -2,32 +2,36 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
-//import java.io.IOException;
+import java.io.IOException;
 import java.util.function.Supplier;
 
-//
-//import org.json.simple.parser.ParseException;
+import org.json.simple.parser.ParseException;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-//import com.pathplanner.lib.auto.AutoBuilder;
-//import com.pathplanner.lib.config.PIDConstants;
-//import com.pathplanner.lib.config.RobotConfig;
-//import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.util.DriveFeedforwards;
+import com.pathplanner.lib.util.swerve.SwerveSetpoint;
+import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -57,7 +61,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
     private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
-
+  
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
         new SysIdRoutine.Config(
@@ -138,6 +142,17 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (Utils.isSimulation()) {
             startSimThread();
         }
+
+        RobotConfig config;
+        try{
+          config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+          // Handle exception as needed
+          e.printStackTrace();
+        }
+
+
+
     }
 
     /**
@@ -161,8 +176,43 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super(drivetrainConstants, odometryUpdateFrequency, modules);
         if (Utils.isSimulation()) {
             startSimThread();
+
         }
     }
+   /* 
+
+
+        AutoBuilder.configure(
+            this::getPose, // Robot pose supplier
+            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+            ),
+            config, // The robot configuration
+            () -> {
+    
+              // Boolean supplier that controls when the path will be mirrored for the red alliance
+              // This will flip the path being followed to the red side of the field.
+              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+              var alliance = DriverStation.getAlliance();
+              if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+              }
+              return false;
+            },
+            this // Reference to this subsystem to set requirements
+    );
+  }
+   
+   
+   
+   
+   
+   
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
@@ -254,14 +304,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
 
 
-
-
-
-
-
-
-
-
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
 
@@ -284,7 +326,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void addVisionMeasurement(
-        Pose2d visionRobotPoseMeters,
+        Pose2d visionRobotPoseMeters, 
         double timestampSeconds,
         Matrix<N3, N1> visionMeasurementStdDevs
     ) {
@@ -292,32 +334,24 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
 
-
-//public class DriveSubsystem extends SubsystemBase {
- // public DriveSubsystem() {
-    // All other subsystem initialization
-    // ...
-
-    // Load the RobotConfig from the GUI settings. You should probably
-    // store this in your Constants file
-   /* 
-    RobotConfig config
-    try{
-      config = RobotConfig.fromGUISettings();
-    } catch (Exception e) {
-      // Handle exception as needed
-      e.printStackTrace();
+    public void SetPointSubsystem() {
+  
     }
 
-*/
+}
+    
 
 
-/* 
+  //private final SwerveSetpointGenerator setpointGenerator;
+  // private SwerveSetpoint previousSetpoint;
 
-private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
+ //private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
 
 
     // Configure AutoBuilder last
+   
+   
+   /* 
     public void configureAutobiulder() throws IOException, ParseException{
     try {
         var config = RobotConfig.fromGUISettings();
@@ -354,42 +388,10 @@ private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new Swerve
        
         }
 
-         */
-
-    }
-
+       */
       
-      
-      
-        /* 
-            this::  , // Robot pose supplier
-            this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-            new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                    new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-                    new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
-            ),
-            config, // The robot configuration
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+       
 
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-              }
-              return false;
-            },
-            this // Reference to this subsystem to set requirements
-    );
-  }
-}
 
-*/
-    
-
-    
 
 

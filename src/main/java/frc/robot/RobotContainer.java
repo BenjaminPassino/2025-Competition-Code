@@ -10,13 +10,14 @@ import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-//import com.pathplanner.lib.auto.AutoBuilder;
-//import com.pathplanner.lib.auto.NamedCommands;
-//import com.pathplanner.lib.commands.PathPlannerAuto;
-//import com.pathplanner.lib.events.EventTrigger;
-//import com.pathplanner.lib.events.PointTowardsZoneTrigger;
-//import com.pathplanner.lib.path.PathPlannerPath;
-//import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -68,28 +69,43 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
 
-   // private final SendableChooser<Command> autoChooser;
+  // private final SendableChooser<Command> autoChooser;
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
  public final static CommandXboxController mechController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-  public RobotContainer() {
+ public RobotContainer() {
     configureBindings();
+
 }
+
+
 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
+       /* drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
                 drive.withVelocityX((-joystick.getLeftY() * MaxSpeed *.5)) // Drive forward with negative Y (forward)
                     .withVelocityY((-joystick.getLeftX() * MaxSpeed* .5)) // Drive left with negative X (left)
                     .withRotationalRate((-joystick.getRightX() * MaxAngularRate *.5 )) // Drive counterclockwise with negative X (left)
                     )
-        );
- 
+        );*/
+
+        //joystick.x();
+
+
+        joystick.x().whileFalse(drivetrain.applyRequest(() ->
+        drive.withVelocityX((-joystick.getLeftY() * MaxSpeed *.5)) // Drive forward with negative Y (forward)
+            .withVelocityY((-joystick.getLeftX() * MaxSpeed* .5)) // Drive left with negative X (left)
+            .withRotationalRate(((+joystick.getLeftTriggerAxis() - joystick.getRightTriggerAxis()) * MaxAngularRate *.5 )) // Drive counterclockwise with negative X (left)
+            )).whileTrue(drivetrain.applyRequest(() ->
+            drive.withVelocityX((-joystick.getLeftY() * MaxSpeed)) // Drive forward with negative Y (forward)
+                .withVelocityY((-joystick.getLeftX() * MaxSpeed)) // Drive left with negative X (left)
+                .withRotationalRate(((+joystick.getLeftTriggerAxis() - joystick.getRightTriggerAxis()) * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                ));
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() ->
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
@@ -106,32 +122,25 @@ public class RobotContainer {
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
-    
-
      
     
     }
 
-   private void configureButtonBindings(){
 
-   }
 
+  // private void configureButtonBindings(){}
 
 /* 
     public RobotContainer() {
     
  
-        new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
+       new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
 
         new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
     
-        
-    
-            // Build an auto chooser. This will use Commands.none() as the default option.
-        //autoChooser = AutoBuilder.buildAutoChooser();
-
+       
         // Another option that allows you to specify the default auto by its name
-        // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+        autoChooser = AutoBuilder.buildAutoChooser("Auto1");
 
     //SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -148,16 +157,24 @@ public class RobotContainer {
         // Load the path you want to follow using its name in the GUI
       //  PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
 
-        // Create a path following command using AutoBuilder. This will also trigger event markers.
-        return AutoBuilder.followPath(path);
-    } catch (Exception e) {
-        DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
-        return Commands.none();
-}
-
-
-}
-
+        // Logging callback for the active path, this is sent as a list of poses
+        PathPlannerLogging.setLogActivePathCallback((poses) -> {
+            // Do whatever you want with the poses here
+            field.getObject("path").setPoses(poses);
+        });
 */
 
-}
+
+    
+
+    
+   // public Command getAutonomousCommand() {
+
+// return autoChooser.getSelected();
+
+
+    
+    }
+
+
+

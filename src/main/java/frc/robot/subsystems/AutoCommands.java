@@ -26,4 +26,17 @@ public class AutoCommands extends SubsystemBase{
     }
 
 
+
+        //public Command wait10(){
+
+            
+
+
+
+       // }
+
+
+
 }
+
+
