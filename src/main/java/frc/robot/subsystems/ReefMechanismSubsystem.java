@@ -366,7 +366,7 @@ public Command ElevatorPIDSetup(){
 );
 }
 
-public Command ElevatorPIDMovement(double setpoint){
+public Command ElevatorPIDMovement(double setpoint, double VVristsetpoint){
   return run(
     () -> {
       
@@ -374,6 +374,10 @@ public Command ElevatorPIDMovement(double setpoint){
         ElevatorPID.setReference(setpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
         SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getEncoder().getPosition());
 
+      if (ElevatorMotor.getEncoder().getPosition() < (setpoint+10) && ElevatorMotor.getEncoder().getPosition() > (setpoint-10)){
+        VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
+      }
     }
   );
 }
@@ -406,18 +410,18 @@ public Command VVristPIDSetup(){
 );
 }
 
-public Command VVristPIDMovement(double VVristsetpoint){
-  return run(
-    () -> {
+// public Command VVristPIDMovement(double VVristsetpoint){
+//   return run(
+//     () -> {
       
-        //double targetPosition = Constants.TARGETPOSITION;
-        VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+//         //double targetPosition = Constants.TARGETPOSITION;
+//         VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
         
-        SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
+//         SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
         
-    }
-  );
-}
+//     }
+//   );
+// }
 
 
 public Command StopMethod()

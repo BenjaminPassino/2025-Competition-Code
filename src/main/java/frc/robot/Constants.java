@@ -75,14 +75,14 @@ public final class Constants {
  public static double L3Angle = -11.1;
  public static double L4Angle = -10.2;
  public static double ZeroedAngle = 0;
- public static double CoralStationAngle= -10.2; //set to l4 angle
+ public static double CoralStationAngle= -4.5; //set to l4 angle
 
  public static double CoralMaximum=1;
  public static double CoralMinimum=0;
 
 
  //PID
- public static double Pvar = 0.028;
+ public static double Pvar = 0.02;  //TODO Adjust speed to be faster in matches
  public static double Ivar = 0;
  public static double Dvar = 0; 
  public static double TARGETPOSITION=1;

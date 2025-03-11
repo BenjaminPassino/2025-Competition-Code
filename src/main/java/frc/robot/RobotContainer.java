@@ -124,22 +124,22 @@ public class RobotContainer {
     //if (mechController.getRightY()<0.2){
 
       //mechController.x().whileTrue(reefSubsystem.SetToL2());
-     mechController.x().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height)).whileTrue(reefSubsystem.VVristPIDMovement(Constants.L2Angle));
+     mechController.x().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height, Constants.L2Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L2Angle));
 
       //mechController.y().whileTrue(reefSubsystem.SetToL4());
-      mechController.y().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height)).whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
+      mechController.y().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height, Constants.L4Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
 
       //mechController.a().whileTrue(reefSubsystem.SetToL1());
-      mechController.a().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height)).whileTrue(reefSubsystem.VVristPIDMovement(Constants.L1Angle));
+      mechController.a().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height, Constants.L1Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L1Angle));
 
-      //mechController.b().whileTrue(reefSubsystem.SetToL3());
-      mechController.b().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height)).whileTrue(reefSubsystem.VVristPIDMovement(Constants.L3Angle));
+      //mechController.b().whileTrue(reefSubsystem.SetToL3())/;
+      mechController.b().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height, Constants.L3Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L3Angle));
 
    //   mechController.back().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
-      mechController.back().whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight)).whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
+      mechController.back().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight, Constants.CoralStationAngle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
     //}
    // else{
-      mechController.rightStick().whileTrue(reefSubsystem.ElevatorManual());
+     mechController.rightStick().whileTrue(reefSubsystem.ElevatorManual());
   //  }
 
   //  if (mechController.getLeftY()<0.2)
@@ -165,6 +165,9 @@ public class RobotContainer {
     mechController.povRight().whileTrue(deepClimbSubsystem.DeepClimbGrab());//ratchet
 
     mechController.povDown().whileTrue(deepClimbSubsystem.DeepClimbRelease());
+
+
+
 
     mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).onFalse(reefSubsystem.CoralStop());
 

@@ -29,6 +29,7 @@ public Timer CoralTimer = new Timer();
   @Override
   public void initialize() {
     CoralTimer.start();
+    reefSubsystem.ElevatorPIDSetup();
   //  if (AutonomousTimer.get() > Constants.EndRelease)
   ///  {reefSubsystem.elevatorStop();}
    // else
@@ -37,7 +38,7 @@ public Timer CoralTimer = new Timer();
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    reefSubsystem.ElevatorPIDMovement(Constants.L4Height);
+    reefSubsystem.ElevatorPIDMovement(Constants.L4Height,Constants.L4Angle);
     if (CoralTimer.get() > Constants.L4TimeAuto)
         reefSubsystem.CoralScoringMethod();
   }
