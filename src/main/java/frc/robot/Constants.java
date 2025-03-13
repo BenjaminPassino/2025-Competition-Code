@@ -66,14 +66,14 @@ public final class Constants {
  public static double ElevatorDownSpeed = -0.5;
 
  public static double L1Height = -33.8;
- public static double L2Height = -64.7;
- public static double L3Height = -119.5;
- public static double L4Height = -193.6;
+ public static double L2Height = -70.1;
+ public static double L3Height = -95.9;
+ public static double L4Height = -180;
  public static double CoralStationHeight= -33.8; //set to l1 height
- public static double L1Angle = -11.1;
- public static double L2Angle = -11.1;
- public static double L3Angle = -11.1;
- public static double L4Angle = -10.2;
+ public static double L1Angle = -12.6;
+ public static double L2Angle = -12.6;
+ public static double L3Angle = -12.6;
+ public static double L4Angle = -9.5;
  public static double ZeroedAngle = 0;
  public static double CoralStationAngle= -4.5; //set to l4 angle
 
@@ -91,9 +91,9 @@ public final class Constants {
  public static double wIvar = 0;
  public static double wDvar = 0; 
 
- public static int cPvar = 1;
- public static int cIvar = 1;
- public static int cDvar = 1; 
+ public static double cPvar = 0.02;
+ public static int cIvar = 0;
+ public static int cDvar = 0; 
 
  //ENCODER
 

@@ -10,13 +10,13 @@ import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-//import com.pathplanner.lib.auto.AutoBuilder;
-//import com.pathplanner.lib.auto.NamedCommands;
-//import com.pathplanner.lib.commands.PathPlannerAuto;
-//import com.pathplanner.lib.events.EventTrigger;
-//import com.pathplanner.lib.events.PointTowardsZoneTrigger;
-//import com.pathplanner.lib.path.PathPlannerPath;
-//import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoCoralCollection;
+import frc.robot.commands.AutoStationToReef;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AutoCommands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -53,8 +54,6 @@ public class RobotContainer {
    // new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
 
     //new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
-   
-   // new EventTrigger("ElevatorStop").whileTrue(reefSubsystem.ElevatorStopCommand());
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -127,8 +126,8 @@ public class RobotContainer {
      mechController.x().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height, Constants.L2Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L2Angle));
 
       //mechController.y().whileTrue(reefSubsystem.SetToL4());
-      mechController.y().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height, Constants.L4Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
-
+     // mechController.y().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height, Constants.L4Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
+     mechController.y().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height, Constants.L4Angle));
       //mechController.a().whileTrue(reefSubsystem.SetToL1());
       mechController.a().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height, Constants.L1Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L1Angle));
 
@@ -136,7 +135,7 @@ public class RobotContainer {
       mechController.b().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height, Constants.L3Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L3Angle));
 
    //   mechController.back().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
-      mechController.back().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight, Constants.CoralStationAngle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
+      mechController.start().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight, Constants.CoralStationAngle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
     //}
    // else{
      mechController.rightStick().whileTrue(reefSubsystem.ElevatorManual());
@@ -156,7 +155,7 @@ public class RobotContainer {
     mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbNotGrab());
   
 
-    mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());
+    mechController.povUp().whileTrue(deepClimbSubsystem.ClimberPIDMovement(UpPosition));
     mechController.povCenter().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
     
   //      .or(mechController.povDown()).whileTrue(deepClimbSubsystem.DeepClimbRelease())
@@ -164,7 +163,7 @@ public class RobotContainer {
 
     mechController.povRight().whileTrue(deepClimbSubsystem.DeepClimbGrab());//ratchet
 
-    mechController.povDown().whileTrue(deepClimbSubsystem.DeepClimbRelease());
+    mechController.povDown().whileTrue(deepClimbSubsystem.ClimberPIDMovement(DownPosition));
 
 
 
@@ -173,11 +172,11 @@ public class RobotContainer {
 
     mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).onFalse(reefSubsystem.CoralStop());
 
-    mechController.start().whileTrue(reefSubsystem.StopMethod()).whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+    mechController.back().whileTrue(reefSubsystem.StopMethod()).whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
   
   //joystick.y();
   //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
-  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup()).onTrue(mechCamera.Camera());
+  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup()).onTrue(mechCamera.Camera()).onTrue(deepClimbSubsystem.ClimberPIDSetup());
   
    }
 
