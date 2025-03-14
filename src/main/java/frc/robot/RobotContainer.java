@@ -6,37 +6,37 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
-import java.util.function.BooleanSupplier;
+// import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
-import com.pathplanner.lib.events.EventTrigger;
-import com.pathplanner.lib.events.PointTowardsZoneTrigger;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.PathPlannerLogging;
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.auto.NamedCommands;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
+// import com.pathplanner.lib.events.EventTrigger;
+// import com.pathplanner.lib.events.PointTowardsZoneTrigger;
+// import com.pathplanner.lib.path.PathPlannerPath;
+// import com.pathplanner.lib.util.PathPlannerLogging;
 
-import edu.wpi.first.math.geometry.Pose2d;
+// import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.DeepClimbMechanismSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ReefMechanismSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+// import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AutoCoralCollection;
-import frc.robot.commands.AutoStationToReef;
+// import frc.robot.commands.AutoCoralCollection;
+// import frc.robot.commands.AutoStationToReef;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.AutoCommands;
+// import frc.robot.subsystems.AutoCommands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.MechCamera;
 //import com.pathplanner.lib.pathfinding;
@@ -155,7 +155,7 @@ public class RobotContainer {
     mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbNotGrab());
   
 
-    mechController.povUp().whileTrue(deepClimbSubsystem.ClimberPIDMovement(UpPosition));
+    mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());//ClimberPIDMovement(UpPosition()));
     mechController.povCenter().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
     
   //      .or(mechController.povDown()).whileTrue(deepClimbSubsystem.DeepClimbRelease())
@@ -163,9 +163,9 @@ public class RobotContainer {
 
     mechController.povRight().whileTrue(deepClimbSubsystem.DeepClimbGrab());//ratchet
 
-    mechController.povDown().whileTrue(deepClimbSubsystem.ClimberPIDMovement(DownPosition));
+    mechController.povDown().whileTrue(deepClimbSubsystem.DeepClimbRelease());//ClimberPIDMovement(DownPosition()));
 
-
+// change to when it gets into specific climb position that it activates rumble to indicate successful climb
 
 
     mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).onFalse(reefSubsystem.CoralStop());
@@ -176,7 +176,7 @@ public class RobotContainer {
   
   //joystick.y();
   //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
-  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup()).onTrue(mechCamera.Camera()).onTrue(deepClimbSubsystem.ClimberPIDSetup());
+  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup()).onTrue(mechCamera.Camera());//.onTrue(deepClimbSubsystem.ClimberPIDSetup());
   
    }
 

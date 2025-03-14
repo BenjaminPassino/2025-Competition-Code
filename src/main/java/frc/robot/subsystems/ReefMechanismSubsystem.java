@@ -1,10 +1,10 @@
 package frc.robot.subsystems;
 
- import edu.wpi.first.hal.CANAPITypes.CANDeviceType;
- import edu.wpi.first.math.controller.PIDController;
- import edu.wpi.first.wpilibj.CAN;
-import edu.wpi.first.wpilibj.DigitalInput;
- import edu.wpi.first.wpilibj.Encoder;
+//  import edu.wpi.first.hal.CANAPITypes.CANDeviceType;
+//  import edu.wpi.first.math.controller.PIDController;
+//  import edu.wpi.first.wpilibj.CAN;
+// import edu.wpi.first.wpilibj.DigitalInput;
+//  import edu.wpi.first.wpilibj.Encoder;
 // import edu.wpi.first.wpilibj.RobotController;
 // import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
@@ -16,14 +16,14 @@ import frc.robot.RobotContainer;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.AbsoluteEncoder;
+// import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+// import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 
 
 import frc.robot.Constants;
@@ -46,7 +46,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
        
 // that feeling when you and your friends take a boat to Istanbul and eat bacon on top of a mountain bc you were bored in history class
  
-        private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
+        // private final DigitalInput CoralArmLimitSwitch = new DigitalInput(Constants.CoralArmLimitSwitchPort);
     
         /* Encoders */
         //private final Encoder CoralArmEncoder = new Encoder(5, 6); //
@@ -132,10 +132,7 @@ public Command Updater(){ //updates smart dashboard values
                   //score coral
                   public Command CoralScoringMethod() { 
                     return run(
-                      () -> {
-      //                  System.out.println("coral scoring works");
-              //      if (ArmScoringPosition())
-               //     {
+                      () -> {          
                         CoralScoringMotor.set(Constants.CoralScoringSpeed);
                           }
                     );
@@ -171,12 +168,7 @@ public Command Updater(){ //updates smart dashboard values
           public Command CoralCollectionMethod() { 
             return run(
               () -> {
-     //           System.out.println("coral collection works");
-      //      if (ArmCollectionPosition())
-        //
-        ////    {
                CoralScoringMotor.set(Constants.CoralCollectionSpeed);
-         //   } 
           });
         }
     
@@ -374,7 +366,7 @@ public Command ElevatorPIDMovement(double setpoint, double VVristsetpoint){
         ElevatorPID.setReference(setpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
         SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getEncoder().getPosition());
 
-      if (ElevatorMotor.getEncoder().getPosition() < (setpoint+10) && ElevatorMotor.getEncoder().getPosition() > (setpoint-10)){
+      if (ElevatorMotor.getEncoder().getPosition() < (setpoint+50) && ElevatorMotor.getEncoder().getPosition() > (setpoint-50)){
         VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
         SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
       }

@@ -14,13 +14,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 
-import frc.robot.subsystems.ReefMechanismSubsystem;
+//import frc.robot.subsystems.ReefMechanismSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private final RobotContainer m_robotContainer;
-  private ReefMechanismSubsystem reefSubsystem;
+   private final RobotContainer m_robotContainer;
+  // private ReefMechanismSubsystem reefSubsystem;
 
   public Robot() {
     m_robotContainer = new RobotContainer();
