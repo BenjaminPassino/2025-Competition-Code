@@ -56,6 +56,7 @@ public final class Constants {
 
 
   //REEF
+  //motor speeds
  public static double CoralScoringSpeed = 0.5;
  public static double CoralArmSpeed = 0.5;
  public static double CoralCollectionSpeed = -0.5;
@@ -65,11 +66,13 @@ public final class Constants {
  public static double ElevatorUpSpeed = 0.5;
  public static double ElevatorDownSpeed = -0.5;
 
+ //encoder values for elevator
  public static double L1Height = -33.8;
  public static double L2Height = -70.1;
  public static double L3Height = -95.9;
  public static double L4Height = -180;
  public static double CoralStationHeight= -33.8; //set to l1 height
+ //encoder values for vvrist
  public static double L1Angle = -12.6;
  public static double L2Angle = -12.6;
  public static double L3Angle = -12.6;
@@ -82,15 +85,16 @@ public final class Constants {
 
 
  //PID
+ //elevator
  public static double Pvar = 0.02;  //TODO Adjust speed to be faster in matches
  public static double Ivar = 0;
  public static double Dvar = 0; 
  public static double TARGETPOSITION=1;
-
+//vvrist
  public static double wPvar = 0.028;
  public static double wIvar = 0;
  public static double wDvar = 0; 
-
+//climber (not used)
  public static double cPvar = 0.02;
  public static int cIvar = 0;
  public static int cDvar = 0; 

@@ -58,16 +58,6 @@ public class ReefMechanismSubsystem extends SubsystemBase{
         private SparkClosedLoopController VVristPID = CoralArmMotor.getClosedLoopController();
 
 
-        
-    
-
-        
-            
-               // public Command mechanismInitializeCommand() {
-                    // Inline construction of command goes here.
-                    // Subsystem::RunOnce implicitly requires `this` subsystem.
-                    
-              //    }
             
               public Command Setup(){
                 return runOnce(
@@ -122,24 +112,11 @@ public Command Updater(){ //updates smart dashboard values
   Constants.Ivar = (SmartDashboard.getNumber("ElevatorI", Constants.Ivar));
   Constants.Dvar = (SmartDashboard.getNumber("ElevatorD", Constants.Dvar));
 
-
-
 }
   );
 }
-            
-            /* CORAL MECHANISM */
-                  //score coral
-                  public Command CoralScoringMethod() { 
-                    return run(
-                      () -> {          
-                        CoralScoringMotor.set(Constants.CoralScoringSpeed);
-                          }
-                    );
-                  }
-        
-        
-        
+   
+
                 public Command EncoderCheck(){
                   return run(
         ()->{
@@ -150,55 +127,38 @@ public Command Updater(){ //updates smart dashboard values
           );
         }
     
-          //get arm into scoring position
-      //    public Boolean ArmScoringPosition() {
-      //      if (CoralArmLimitSwitch.get()) //\
-      //      {
-      //          CoralArmMotor.set(0); //do not know until motor is mounted
-      //      }
-    //        {
-   //             CoralArmMotor.set(Constants.CoralArmSpeed); 
-   //         }
-    //        return CoralArmLimitSwitch.get();
-    //      }
+
 
           // competition seasoning
     
+           /* CORAL MECHANISM */
+                  //score coral
+
           //intake coral
+          public Command CoralScoringMethod() { 
+            return run(
+              () -> {          
+                CoralScoringMotor.set(Constants.CoralScoringSpeed);
+                  }
+            );
+          }
+
           public Command CoralCollectionMethod() { 
             return run(
               () -> {
                CoralScoringMotor.set(Constants.CoralCollectionSpeed);
-          });
+          }
+          );
         }
-    
-          //collect coral from station
-          // public Boolean ArmCollectionPosition() {
-          //   if (CoralArmLimitSwitch.get()) //
-          //   {
-          //       CoralArmMotor.set(0); //do not know until motor is mounted
-          //   }
-          //   else
-          //   {
-          //       CoralArmMotor.set(Constants.CoralCollectionArmSpeed); 
-          //   }
-          //   return CoralArmLimitSwitch.get();
-          // }
-
-
-//TESTING
-
-// public Command LimitSwitchTest(){
-//   return run(
-//     () -> {
-//   ElevatorBottomLimitSwitch.get();
-//   SmartDashboard.putBoolean("Am I Working", ElevatorBottomLimitSwitch.get());
-//     }); 
-// }
-
-                                                                                           
-                     
-                                          
+        public Command CoralStop(){
+          return runOnce(
+            () -> {
+                CoralScoringMotor.set(0);
+            }
+          );
+        }
+  
+        
      /* ALGAE MECHANISM */
           //collect algae
           public Command AlgaeCollectionMethod() {
@@ -236,29 +196,8 @@ public Command Updater(){ //updates smart dashboard values
           }
     
     
-    /* ELEVATOR */
-          //UP
-          //: Find elevator heights for all four reef levels and processor (5 total)
-       //  public Command ElevatorUpMethod()
-       //   {
-      //      return run(
-     //         () -> { 
-    //            ElevatorMotor.set(Constants.ElevatorUpSpeed);
-   //           System.out.println("elevator up works");
-  //            }); find speed for elevator 
- //     }
-      //DOWN
-    // public Command ElevatorDownMethod()
-   //    //elevator check method 
-   // {
- //      return run(
-//        () -> {
-//ElevatorMotor.set(Constants.ElevatorDownSpeed);
-   //     System.out.println("elevator down works");
- //       }
-  //      );
-         //opposite of elevator up (so elevator goes down)
-//      }
+  
+
 
       public Command ElevatorManual() //manually controls elevator by setting it to the joystick value
       {
@@ -277,34 +216,13 @@ public Command Updater(){ //updates smart dashboard values
       {
         return run(
           () -> {
-            
-         //   SmartDashboard.putNumber("VVristManualSpeed",(RobotContainer.mechController.getLeftY())/100);
             SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmEncoder.getPosition()));
-        //    if (CoralArmMotor.getAbsoluteEncoder().getPosition()>Constants.CoralMaximum){
-         //     CoralArmMotor.set(-0.1);
-         //   }
-         //   if (CoralArmMotor.getAbsoluteEncoder().getPosition()<Constants.CoralMinimum){
-         //     CoralArmMotor.set(0.1);
-         //   }
-         //   else 
-         //   {
             CoralArmMotor.set(-((RobotContainer.mechController.getLeftY())/20));
-       //   }
         }
         );
       }
 
-      public Command CoralStop(){
-        return run(
-          () -> {
-              CoralScoringMotor.set(0);
-          }
-        );
-      }
-      //STOP
-    //  public void ElevatorStopMethod() // may not need 
-   //   {
-   //   }
+    
 
       //CHECKING IF ELEVATOR IS AT BOTTOM
       public Command ElevatorStopCommand()
@@ -321,23 +239,10 @@ public Command Updater(){ //updates smart dashboard values
         );
       }
 
-      // public boolean ElevatorPosition() // do not know if this works
-      // {
-      //   if (ElevatorBottomLimitSwitch.get())
-      //   {
-      //      ElevatorMotor.set(0);
-      //       System.out.println("elevator stopped moving"); //
-      //   } 
-      //  // else 
-      //  // {
-      // //     ElevatorDownMethod();
-      // //  }
-      //   return ElevatorBottomLimitSwitch.get();
 
-      //  }
       
 
-
+//sets up elevator PID
 public Command ElevatorPIDSetup(){
   return runOnce(
     () -> {
@@ -358,6 +263,7 @@ public Command ElevatorPIDSetup(){
 );
 }
 
+//Moves elevator and vvrist via pid
 public Command ElevatorPIDMovement(double setpoint, double VVristsetpoint){
   return run(
     () -> {
@@ -373,6 +279,8 @@ public Command ElevatorPIDMovement(double setpoint, double VVristsetpoint){
     }
   );
 }
+
+//stops elevator
 public Command elevatorStop()
 {
   return run(
@@ -382,6 +290,7 @@ public Command elevatorStop()
   );
 }
 
+//sets up vvrist pid
 public Command VVristPIDSetup(){
   return runOnce(
     () -> {
@@ -402,23 +311,11 @@ public Command VVristPIDSetup(){
 );
 }
 
-// public Command VVristPIDMovement(double VVristsetpoint){
-//   return run(
-//     () -> {
-      
-//         //double targetPosition = Constants.TARGETPOSITION;
-//         VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-        
-//         SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
-        
-//     }
-//   );
-// }
 
-
+//stops all reef motors
 public Command StopMethod()
 {
-  return run(
+  return runOnce(
     () -> {
       LeftAlgaeMotor.set(0);
       RightAlgaeMotor.set(0);
@@ -431,95 +328,7 @@ public Command StopMethod()
 
 }
 
-// sets targetposition to the different heights
-// public Command SetToL1()
-// {
-//   return run (
-// () -> {
-//   Constants.TARGETPOSITION = Constants.L1Height;
-// }
-//   );
-// }
-
-// public Command SetToL2()
-// {
-//   return run (
-// () -> {
-//   Constants.TARGETPOSITION = Constants.L2Height;
-// }
-//   );
-// }
-
-// public Command SetToL3()
-// {
-//   return run (
-// () -> {
-//   Constants.TARGETPOSITION = Constants.L3Height;
-// }
-//   );
-// }
-
-// public Command SetToL4()
-// {
-//   return run (
-// () -> {
-//   Constants.TARGETPOSITION = Constants.L4Height;
-// }
-//   );
-// }
-
-// public Command SetToCoralStation()
-// {
-//   return run (
-// () -> {
-//   Constants.TARGETPOSITION = Constants.CoralStationHeight;
-// }
-//   );
-// }
-
-/* DEEP CLIMB */
-
-// press button
-// check position
-// grab on to cage
-// lift robot
-// activate limit switch and stop
-
-
-// initialize components
-
-
-
-/* Motors */
-//LeftAlgaeMotor
-//RightAlgaeMotor
-//CoralScoringMotor
-//CoralArmMotor 
-//ElevatorMotor
-//DeepClimbMotor
-// servo motor for deep climb
-
-/* Limit Switches */
-//ElevatorBottomLimitSwitch
-//DeepClimbArmLimitSwitch (prevent arm from hitting robot)
-//DeepClimbCageLimitSwitch (sucessfully grab cage)
-//CoralArmLimitSwitch
-
-/* Encoders */
-//CoralArmEncoder
-
-
-// public Command SpeedMaths(){
-//   return run(
-//     () -> {
-// ElevatorMotor.getAbsoluteEncoder();      
-
-//     }); 
-// }
-
 }
-
-
 
 
 
