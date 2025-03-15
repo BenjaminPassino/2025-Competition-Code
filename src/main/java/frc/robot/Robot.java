@@ -22,21 +22,13 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import frc.robot.subsystems.ReefMechanismSubsystem;
 
 public class Robot extends TimedRobot {
- // private Command m_autonomousCommand;
+ private Command m_autonomousCommand;
 
-
-  private final AddressableLED m_led;
-  private final AddressableLEDBuffer m_ledBuffer;
+ private final RobotContainer m_robotContainer;
 
   public Robot() {
-     
-    m_led = new AddressableLED(9);
-
-    m_ledBuffer = new AddressableLEDBuffer(60);
-    m_led.setLength(m_ledBuffer.getLength());
-
-    m_led.setData(m_ledBuffer);
-    m_led.start();
+    m_robotContainer = new RobotContainer();
+  
   }
 
 @Override
@@ -58,33 +50,6 @@ public void robotInit() {
   public void disabledInit() {}
 
   
-  public void PowerDistribution(){
-
-    PowerDistribution examplePD = new PowerDistribution();
-
-     double voltage = examplePD.getVoltage();
-     double TempCelsius = examplePD.getTemperature();
-
-     double totalCurrent = examplePD.getTotalCurrent();
-
-     double totalPower = examplePD.getTotalPower();
-
-     double totalEnergy = examplePD.getTotalEnergy();
-
-     double current7 = examplePD.getCurrent(7);
-     
-     SmartDashboard.putNumber("Temp",TempCelsius);
-     SmartDashboard.putNumber("Voltage",voltage);
-     SmartDashboard.putNumber("Current",totalCurrent);
-     SmartDashboard.putNumber("Power",totalPower);
-     SmartDashboard.putNumber("Energy",totalEnergy);
-     SmartDashboard.putNumber("Current7",current7);
-  
-  examplePD.setSwitchableChannel(true);
-
-}
-  
-  
   @Override
   public void disabledPeriodic() {}
 
@@ -93,11 +58,11 @@ public void robotInit() {
 
   @Override
   public void autonomousInit() {
-   // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-  //  if (m_autonomousCommand != null) {
-   //   m_autonomousCommand.schedule();
-  //  }
+    if (m_autonomousCommand != null) {
+     m_autonomousCommand.schedule();
+    }
   }
 
   /** This function is called periodically during autonomous. */
@@ -109,16 +74,16 @@ public void robotInit() {
 
   @Override
   public void teleopInit() {
-   // if (m_autonomousCommand != null) {
-   //   m_autonomousCommand.cancel();
-   //// }
+    if (m_autonomousCommand != null) {
+     m_autonomousCommand.cancel();
+    }
   }
+  
 
 
   @Override
   public void teleopPeriodic() {
 
-   // PowerDistribution();
   }
 
 
@@ -139,4 +104,5 @@ public void robotInit() {
 
   @Override
   public void simulationPeriodic() {}
+
 }

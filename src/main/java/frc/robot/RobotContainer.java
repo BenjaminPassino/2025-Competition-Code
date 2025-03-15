@@ -85,16 +85,16 @@ public class RobotContainer {
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-       /* drivetrain.setDefaultCommand(
+       // drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX((-joystick.getLeftY() * MaxSpeed *.5)) // Drive forward with negative Y (forward)
-                    .withVelocityY((-joystick.getLeftX() * MaxSpeed* .5)) // Drive left with negative X (left)
-                    .withRotationalRate((-joystick.getRightX() * MaxAngularRate *.5 )) // Drive counterclockwise with negative X (left)
-                    )
-        );*/
+         //   drivetrain.applyRequest(() ->
+          //      drive.withVelocityX((-joystick.getLeftY() * MaxSpeed *.5)) // Drive forward with negative Y (forward)
+            //        .withVelocityY((-joystick.getLeftX() * MaxSpeed* .5)) // Drive left with negative X (left)
+            //        .withRotationalRate((-joystick.getRightX() * MaxAngularRate *.5 )) // Drive counterclockwise with negative X (left)
+            //        )
+      //  );
 
-        //joystick.x();
+       // joystick.x();
 
 
         joystick.x().whileFalse(drivetrain.applyRequest(() ->
@@ -128,9 +128,9 @@ public class RobotContainer {
 
 
 
-  // private void configureButtonBindings(){}
+   private void configureButtonBindings(){}
 
-/* 
+   private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
     
  
@@ -168,13 +168,14 @@ public class RobotContainer {
     
 
     
-   // public Command getAutonomousCommand() {
+   public Command getAutonomousCommand() {
 
-// return autoChooser.getSelected();
-
+ return autoChooser.getSelected();
+   }
 
     
-    }
+  }
+
 
 
 
