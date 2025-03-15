@@ -40,7 +40,7 @@ public Timer CoralTimer = new Timer();
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    reefSubsystem.ElevatorPIDMovement(Constants.L4Height);
+    reefSubsystem.ElevatorPIDMovement(Constants.L4Height, Constants.L4Angle);
     if (CoralTimer.get() > Constants.StationToReef)
         reefSubsystem.CoralScoringMethod();
   }
