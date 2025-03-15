@@ -318,7 +318,7 @@ public Command Updater(){ //updates smart dashboard values
         return run(
         () -> {
     //        ElevatorBottomLimitSwitch.get();
-        if (RobotContainer.ElevatorBottomLimitSwitch.get())
+        if (true)
         
          ElevatorMotor.set(0);
           //ElevatorMotor.getEncoder().setPosition(0);

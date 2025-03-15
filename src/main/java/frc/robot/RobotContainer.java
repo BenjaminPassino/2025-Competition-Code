@@ -75,10 +75,6 @@ public class RobotContainer {
  public final static CommandXboxController mechController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
- public RobotContainer() {
-    configureBindings();
-
-}
 
 
 
@@ -149,20 +145,12 @@ public class RobotContainer {
 
 
 
-  }}
+  }
 
   //public Command getAutonomousCommand() {
 
-    try{
-        // Load the path you want to follow using its name in the GUI
-      //  PathPlannerPath path = PathPlannerPath.fromPathFile("Example Path");
+    
 
-        // Logging callback for the active path, this is sent as a list of poses
-        PathPlannerLogging.setLogActivePathCallback((poses) -> {
-            // Do whatever you want with the poses here
-            field.getObject("path").setPoses(poses);
-        });
-*/
 
 
     
