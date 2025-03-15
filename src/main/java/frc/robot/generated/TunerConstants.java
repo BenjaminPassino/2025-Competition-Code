@@ -257,14 +257,6 @@ public class TunerConstants {
                 drivetrainConstants, odometryUpdateFrequency, modules
             );
 
-            RobotConfig config;
-            try{
-              config = RobotConfig.fromGUISettings();
-            } catch (Exception e) {
-              // Handle exception as needed
-              e.printStackTrace();
-            }
-
 
 
         }
