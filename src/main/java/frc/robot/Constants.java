@@ -57,9 +57,9 @@ public final class Constants {
 
   //REEF
   //motor speeds
- public static double CoralScoringSpeed = 0.5;
+ public static double CoralScoringSpeed = 0.25;
  public static double CoralArmSpeed = 0.5;
- public static double CoralCollectionSpeed = -0.5;
+ public static double CoralCollectionSpeed = -0.25;
  public static double CoralCollectionArmSpeed = -0.5;
  public static double AlgaeCollectionSpeed = -0.5;
  public static double AlgaeScoringSpeed = 0.5;
@@ -80,8 +80,8 @@ public final class Constants {
  public static double ZeroedAngle = 0;
  public static double CoralStationAngle= -4.5; //set to l4 angle
 
- public static double CoralMaximum=1;
- public static double CoralMinimum=0;
+ //public static double CoralMaximum=1;
+ //public static double CoralMinimum=0;
 
 
  //PID

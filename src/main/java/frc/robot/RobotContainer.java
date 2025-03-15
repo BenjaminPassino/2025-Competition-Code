@@ -172,11 +172,15 @@ public class RobotContainer {
 // change to when it gets into specific climb position that it activates rumble to indicate successful climb
 
 
-    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).onFalse(reefSubsystem.CoralStop());
+    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).whileFalse(reefSubsystem.CoralStop());
+//mechController.leftBumper().whileTrue(reefSubsystem.NewCIM());
 
-    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).onFalse(reefSubsystem.CoralStop());
+    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).whileFalse(reefSubsystem.CoralStop());
+  //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSM());
+   // mechController.back().whileTrue(reefSubsystem.StopMethod()).whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+ //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSTM());
 
-    mechController.back().whileTrue(reefSubsystem.StopMethod()).whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+    
   
   //joystick.y();
   //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());

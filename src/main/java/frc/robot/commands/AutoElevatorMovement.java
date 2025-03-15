@@ -39,8 +39,8 @@ public Timer CoralTimer = new Timer();
   @Override
   public void execute() {
     reefSubsystem.ElevatorPIDMovement(Constants.L4Height,Constants.L4Angle);
-    if (CoralTimer.get() > Constants.L4TimeAuto)
-        reefSubsystem.CoralScoringMethod();
+   // if (CoralTimer.get() > Constants.L4TimeAuto)
+      //  reefSubsystem.CoralScoringMethod();
   }
     
   // Called once the command ends or is interrupted.

@@ -151,14 +151,14 @@ public Command Updater(){ //updates smart dashboard values
           );
         }
         public Command CoralStop(){
-          return runOnce(
+          return run(
             () -> {
                 CoralScoringMotor.set(0);
             }
           );
         }
   
-        
+     
      /* ALGAE MECHANISM */
           //collect algae
           public Command AlgaeCollectionMethod() {
@@ -216,8 +216,9 @@ public Command Updater(){ //updates smart dashboard values
       {
         return run(
           () -> {
-            SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmEncoder.getPosition()));
+            //SmartDashboard.putNumber("VVristAbsoluteEncoder",(CoralArmEncoder.getPosition()));
             CoralArmMotor.set(-((RobotContainer.mechController.getLeftY())/20));
+            CoralStop();
         }
         );
       }
@@ -264,17 +265,18 @@ public Command ElevatorPIDSetup(){
 }
 
 //Moves elevator and vvrist via pid
+
 public Command ElevatorPIDMovement(double setpoint, double VVristsetpoint){
   return run(
     () -> {
-      
+        CoralStop(); //stops buggy coral flywheel
         //double targetPosition = Constants.TARGETPOSITION;
         ElevatorPID.setReference(setpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
         SmartDashboard.putNumber("ElevatorHeight",ElevatorMotor.getEncoder().getPosition());
 
       if (ElevatorMotor.getEncoder().getPosition() < (setpoint+50) && ElevatorMotor.getEncoder().getPosition() > (setpoint-50)){
         VVristPID.setReference(VVristsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-        SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
+        //SmartDashboard.putNumber("VVristPosition",CoralArmMotor.getEncoder().getPosition());
       }
     }
   );
