@@ -17,14 +17,15 @@ import com.pathplanner.lib.events.EventTrigger;
 import com.pathplanner.lib.events.PointTowardsZoneTrigger;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
-import com.pathplanner.lib.auto.AutoBuilder;
+//import com.pathplanner.lib.auto.AutoBuilder;
 
 // import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.DeepClimbMechanismSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
  import edu.wpi.first.wpilibj.DriverStation;
- import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
  import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ReefMechanismSubsystem;
@@ -41,14 +42,17 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.MechCamera;
 //import com.pathplanner.lib.pathfinding;
-
-
+import frc.robot.Robot;
 
 
 public class RobotContainer {
   private final ReefMechanismSubsystem reefSubsystem = new ReefMechanismSubsystem();
   private final DeepClimbMechanismSubsystem deepClimbSubsystem = new DeepClimbMechanismSubsystem();
   public static DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
+
+
+ // private final Robot robot = new Robot();
+
 
   //NamedCommands.registerCommand("CoralCollection", reefSubsystem.AlgaeCollectionMethod() );
  
@@ -123,7 +127,6 @@ public class RobotContainer {
     
 
 
-
     //if (mechController.getRightY()<0.2){
 
       //mechController.x().whileTrue(reefSubsystem.SetToL2());
@@ -179,8 +182,39 @@ public class RobotContainer {
   //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSM());
    // mechController.back().whileTrue(reefSubsystem.StopMethod()).whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
  //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSTM());
-
     
+  boolean bIsCoralWheelMoving = false;
+
+  Double thisFrameTime = Robot.TeleopTimer.get();
+
+  java.util.ArrayList<String> arrayListCoralCommands;
+  java.util.ArrayList<Double> arrayListFrameTimes;
+
+  String controllerOutputString;
+  // debug string to see controller inputs in real time in system console
+  int leftTriggerVal = mechController.leftTrigger().hashCode();
+  controllerOutputString = "Controller:" + "LT:" + leftTriggerVal;
+  
+  System.out.println(controllerOutputString);
+  
+  arrayListFrameTimes.add(null);
+
+  if (mechController.leftBumper().getAsBoolean() == true){
+    bIsCoralWheelMoving = true;
+  }
+
+  if (bIsCoralWheelMoving == true) {
+    reefSubsystem.CoralCollectionMethod();
+  }
+  else {
+    reefSubsystem.CoralStop();
+    if (mechController.leftTrigger().getAsBoolean() == true)
+    {
+     reefSubsystem.CoralScoringMethod();
+    }
+    
+  }
+
   
   //joystick.y();
   //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
