@@ -36,7 +36,7 @@ public final class Constants {
   public static final int LeftAlgaeMotorPort = 0;  //20
   public static final int RightAlgaeMotorPort = 1; //21
   //CORAL SPARK
-  public static final int CoralScoringMotorPort = 3; //22
+  public static final int CoralScoringMotorPort = 22; //CAN 
   public static final int CoralArmMotorPort = 23; //CAN
   //ELEVATOR SPARK
   public static final int ElevatorMotorPort = 24; //CAN
@@ -69,7 +69,7 @@ public final class Constants {
  //encoder values for elevator
  public static double L1Height = -33.8;
  public static double L2Height = -70.1;
- public static double L3Height = -95.9;
+ public static double L3Height = -125;
  public static double L4Height = -180;
  public static double CoralStationHeight= -33.8; //set to l1 height
  //encoder values for vvrist

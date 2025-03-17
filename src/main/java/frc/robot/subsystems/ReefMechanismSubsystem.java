@@ -34,7 +34,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static PWMSparkMax LeftAlgaeMotor = new PWMSparkMax(Constants.LeftAlgaeMotorPort);
     private final static PWMSparkMax RightAlgaeMotor = new PWMSparkMax(Constants.RightAlgaeMotorPort);
     //Coral motors
-    private final static PWMSparkMax CoralScoringMotor = new PWMSparkMax(Constants.CoralScoringMotorPort);
+    private final static SparkMax CoralScoringMotor = new SparkMax(Constants.CoralScoringMotorPort,MotorType.kBrushless);
     private final static SparkMax CoralArmMotor = new SparkMax(Constants.CoralArmMotorPort,MotorType.kBrushless);
     //Elevator motor
     private final static SparkMax ElevatorMotor = new SparkMax(Constants.ElevatorMotorPort,MotorType.kBrushless);
@@ -230,12 +230,9 @@ public Command Updater(){ //updates smart dashboard values
       {
         return run(
         () -> {
-          
-        if (RobotContainer.ElevatorBottomLimitSwitch.get())
-        
          ElevatorMotor.set(0);
           ElevatorMotor.getEncoder().setPosition(0);
-
+          
         }
         );
       }

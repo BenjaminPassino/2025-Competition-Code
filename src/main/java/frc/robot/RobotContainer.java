@@ -24,7 +24,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.DeepClimbMechanismSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
  import edu.wpi.first.wpilibj.DriverStation;
- import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
  import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ReefMechanismSubsystem;
@@ -172,22 +172,23 @@ public class RobotContainer {
 // change to when it gets into specific climb position that it activates rumble to indicate successful climb
 
 
-    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).whileFalse(reefSubsystem.CoralStop());
+    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).onFalse(reefSubsystem.CoralStop());
 //mechController.leftBumper().whileTrue(reefSubsystem.NewCIM());
 
-    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).whileFalse(reefSubsystem.CoralStop());
+    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).onFalse(reefSubsystem.CoralStop());
   //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSM());
    // mechController.back().whileTrue(reefSubsystem.StopMethod()).whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
  //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSTM());
-
     
+ new Trigger(() -> ElevatorBottomLimitSwitch.get()).onTrue(reefSubsystem.ElevatorStopCommand());
+
   
   //joystick.y();
   //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
   joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup()).onTrue(mechCamera.Camera());//.onTrue(deepClimbSubsystem.ClimberPIDSetup());
   
-   }
-  
+    }
+
 
 
 
@@ -222,7 +223,7 @@ public class RobotContainer {
 
     
 
-    
+  
    public Command getAutonomousCommand() {
 
  return autoChooser.getSelected();
