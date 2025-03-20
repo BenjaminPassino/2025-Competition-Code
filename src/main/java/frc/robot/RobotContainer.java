@@ -6,7 +6,7 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
-import java.util.function.BooleanSupplier;
+// import java.util.function.BooleanSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -19,25 +19,27 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.auto.AutoBuilder;
 
-import edu.wpi.first.math.geometry.Pose2d;
+// import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.subsystems.DeepClimbMechanismSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
+ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.ReefMechanismSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+ import edu.wpi.first.wpilibj2.command.Command;
+ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AutoCoralCollection;
+// import frc.robot.commands.AutoCoralCollection;
+// import frc.robot.commands.AutoStationToReef;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.AutoCommands;
+ import frc.robot.subsystems.AutoCommands;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.MechCamera;
 //import com.pathplanner.lib.pathfinding;
 
 
@@ -46,14 +48,13 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 public class RobotContainer {
   private final ReefMechanismSubsystem reefSubsystem = new ReefMechanismSubsystem();
   private final DeepClimbMechanismSubsystem deepClimbSubsystem = new DeepClimbMechanismSubsystem();
+  public static DigitalInput ElevatorBottomLimitSwitch = new DigitalInput(Constants.ElevatorBottomLimitSwitchPort);
 
   //NamedCommands.registerCommand("CoralCollection", reefSubsystem.AlgaeCollectionMethod() );
  
    // new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
 
     //new EventTrigger("run intake").whileTrue(Commands.print("running intake"));
-   
-   // new EventTrigger("ElevatorStop").whileTrue(reefSubsystem.ElevatorStopCommand());
 
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -72,16 +73,15 @@ public class RobotContainer {
   // private final SendableChooser<Command> autoChooser;
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final MechCamera mechCamera = new MechCamera();
  public final static CommandXboxController mechController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
-
-
-
+ 
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-       // drivetrain.setDefaultCommand(
+      
             // Drivetrain will execute this command periodically
          //   drivetrain.applyRequest(() ->
           //      drive.withVelocityX((-joystick.getLeftY() * MaxSpeed *.5)) // Drive forward with negative Y (forward)
@@ -120,15 +120,81 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
      
     
+    
+
+
+
+    //if (mechController.getRightY()<0.2){
+
+      //mechController.x().whileTrue(reefSubsystem.SetToL2());
+     mechController.x().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L2Height, Constants.L2Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L2Angle));
+
+      //mechController.y().whileTrue(reefSubsystem.SetToL4());
+     // mechController.y().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height, Constants.L4Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L4Angle));
+     mechController.y().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L4Height, Constants.L4Angle));
+      //mechController.a().whileTrue(reefSubsystem.SetToL1());
+      mechController.a().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L1Height, Constants.L1Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L1Angle));
+
+      //mechController.b().whileTrue(reefSubsystem.SetToL3())/;
+      mechController.b().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.L3Height, Constants.L3Angle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.L3Angle));
+
+   //   mechController.back().and(ElevatorLimitSwitchTrigger).whileTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight));
+      mechController.start().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight, Constants.CoralStationAngle));//.whileTrue(reefSubsystem.VVristPIDMovement(Constants.CoralStationAngle));
+    //}
+   // else{
+     mechController.rightStick().whileTrue(reefSubsystem.ElevatorManual());
+  //  }
+
+  //  if (mechController.getLeftY()<0.2)
+//{
+  
+//}
+//  else{
+  mechController.leftStick().whileTrue(reefSubsystem.CoralManual());
+// }
+    mechController.rightBumper().whileTrue(reefSubsystem.AlgaeCollectionMethod()).onFalse(reefSubsystem.AlgaeStop());
+
+    mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()).onFalse(reefSubsystem.AlgaeStop());
+
+    mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbNotGrab());
+  
+
+    mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());//ClimberPIDMovement(UpPosition()));
+    mechController.povCenter().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+    
+  //      .or(mechController.povDown()).whileTrue(deepClimbSubsystem.DeepClimbRelease())
+  //      .whileFalse(deepClimbSubsystem.DeepClimbStopMethod());//rotate clockwise
+
+    mechController.povRight().whileTrue(deepClimbSubsystem.DeepClimbGrab());//ratchet
+
+    mechController.povDown().whileTrue(deepClimbSubsystem.DeepClimbRelease());//ClimberPIDMovement(DownPosition()));
+
+// change to when it gets into specific climb position that it activates rumble to indicate successful climb
+
+
+    mechController.leftBumper().whileTrue(reefSubsystem.CoralCollectionMethod()).onFalse(reefSubsystem.CoralStop());
+//mechController.leftBumper().whileTrue(reefSubsystem.NewCIM());
+
+    mechController.leftTrigger().whileTrue(reefSubsystem.CoralScoringMethod()).onFalse(reefSubsystem.CoralStop());
+  //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSM());
+   // mechController.back().whileTrue(reefSubsystem.StopMethod()).whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
+ //  mechController.leftBumper().whileTrue(reefSubsystem.NewCSTM());
+    
+ new Trigger(() -> ElevatorBottomLimitSwitch.get()).onTrue(reefSubsystem.ElevatorStopCommand());
+
+  
+  //joystick.y();
+  //joystick.y().onTrue(reefSubsystem.ElevatorPIDSetup());
+  joystick.y().onTrue(reefSubsystem.Setup()).onTrue(reefSubsystem.VVristPIDSetup()).onTrue(reefSubsystem.ElevatorPIDSetup()).onTrue(mechCamera.Camera());//.onTrue(deepClimbSubsystem.ClimberPIDSetup());
+  
     }
 
 
 
-   private void configureButtonBindings(){}
 
    private final SendableChooser<Command> autoChooser;
-    public RobotContainer() {
-    
+   
+   public RobotContainer(){
  
        new PointTowardsZoneTrigger("Speaker").whileTrue(Commands.print("aiming at speaker"));
 
@@ -138,14 +204,16 @@ public class RobotContainer {
         // Another option that allows you to specify the default auto by its name
         autoChooser = AutoBuilder.buildAutoChooser("Auto1");
 
-    //SmartDashboard.putData("Auto Chooser", autoChooser);
-
-  
+    SmartDashboard.putData("Auto Chooser", autoChooser);
    
 
+      configureBindings();
+  
+   }
 
+  
 
-  }
+  
 
   //public Command getAutonomousCommand() {
 
@@ -155,14 +223,14 @@ public class RobotContainer {
 
     
 
-    
+  
    public Command getAutonomousCommand() {
 
  return autoChooser.getSelected();
    }
 
-    
   }
+  
 
 
 

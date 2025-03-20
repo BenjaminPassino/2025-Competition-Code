@@ -10,20 +10,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+// import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-//import com.revrobotics.spark.SparkClosedLoopController;
-//import com.revrobotics.RelativeEncoder;
-//import com.revrobotics.spark.SparkBase.ControlType;
-//import com.revrobotics.spark.SparkBase.PersistMode;
-//import com.revrobotics.spark.SparkBase.ResetMode;
-//import com.revrobotics.spark.config.SparkMaxConfig;
-//import com.revrobotics.spark.ClosedLoopSlot;
-//import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+// import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.RelativeEncoder;
+// import com.revrobotics.spark.SparkBase.ControlType;
+// import com.revrobotics.spark.SparkBase.PersistMode;
+// import com.revrobotics.spark.SparkBase.ResetMode;
+// import com.revrobotics.spark.config.SparkMaxConfig;
+// import com.revrobotics.spark.ClosedLoopSlot;
+// import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 // hi
 
 
@@ -37,10 +39,11 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
        //limit switch
     //   private final DigitalInput DeepClimbArmLimitSwitch = new DigitalInput(Constants.DeepClimbArmLimitSwitchPort);
        private final DigitalInput DeepClimbCageLimitSwitch = new DigitalInput(Constants.DeepClimbCageLimitSwitchPort);
-
+       private RelativeEncoder ClimberEncoder = DeepClimbMotor.getEncoder();
        
        private SparkMaxConfig climbmotorconfig;
         private SparkClosedLoopController ClimberPID = DeepClimbMotor.getClosedLoopController();
+        public double climbsetpoint;
 
        public Command DeepClimb(){ // full mechanism
               return run(
@@ -58,6 +61,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               return run(
               () -> {
                      DeepClimbMotor.set(Constants.ReleasePortSpeed);
+                     SmartDashboard.putNumber("ClimberPosition", ClimberEncoder.getPosition());
               }
               );
        }
@@ -68,7 +72,7 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
               () -> {
                     System.out.println("deep climb grabbing works");
                      DeepClimbServo.set(.2);
-                     RobotContainer.mechController.setRumble(RumbleType.kBothRumble, 0.2);
+                     RobotContainer.mechController.setRumble(RumbleType.kBothRumble, 1);
                      }  
               );
        }
@@ -107,9 +111,10 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
           public Command DeepClimbLift(){
               return run(
                   () -> {
-                    // if (DeepClimbCageLimitSwitch.get()); //checks for coral limit switch
+                    // if (DeepClimbCageLimitSwitch.get()); //checks for cage limit switch
                      System.out.println("deep climb lift works");
                      DeepClimbMotor.set(.8); // lifts robot when ratchet is in place
+                     SmartDashboard.putNumber("ClimberPosition", ClimberEncoder.getPosition());
                   }   
               );
           }
@@ -130,10 +135,11 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
 
 
           public Command ClimberPIDSetup(){
-  return run(
+  return runOnce(
     () -> {
+       System.out.println("hi");
+      DeepClimbMotor.getEncoder().setPosition(0);
       climbmotorconfig.closedLoop
-      .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
       .p(Constants.cPvar)
       .i(Constants.cIvar)
       .d(Constants.cDvar)
@@ -143,8 +149,18 @@ public class DeepClimbMechanismSubsystem extends SubsystemBase{
     SmartDashboard.setDefaultNumber("TargetVelocity",0);
     SmartDashboard.setDefaultBoolean("Control Mode",false);
     SmartDashboard.setDefaultBoolean("Reset Encoder",false);
+    SmartDashboard.putNumber("ClimberPosition", 0);
     }
 );
+}
+
+public Command ClimberPIDMovement(double climbsetpoint){
+  return run(
+    () -> {
+        ClimberPID.setReference(climbsetpoint, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+        SmartDashboard.putNumber("ClimberPosition",DeepClimbMotor.getEncoder().getPosition());
+    }
+  );
 }
 //grab cage
 //stop once cage is grabbed

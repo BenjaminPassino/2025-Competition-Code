@@ -81,27 +81,7 @@ public class Auto extends SubsystemBase{
 //     );
 // }
 
-//public Command AutoCoralCollection(){
-  //  return run(
-    //    () -> {
-      //         
-        //    reefSubsystem.ElevatorPIDMovement(Constants.CoralStationHeight);
-          //          if (AutonomousTimer.get() > 6);
-     //       {reefSubsystem.CoralCollectionMethod(); }
-       // }
-//    );
-// }
 
-// public Command AutoL1(){
-//     return run(
-//         () -> {
-//                 if (AutonomousTimer.get() > 8){
-//             reefSubsystem.ElevatorPIDMovement(Constants.L4Height);
-//                     if (AutonomousTimer.get() > 9){
-//             reefSubsystem.CoralScoringMethod(); }}
-//         }
-//     );
-//}
 
 
 
