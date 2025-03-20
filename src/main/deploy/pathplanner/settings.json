@@ -31,7 +31,5 @@
   "brModuleY": -0.286,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
-  "robotFeatures": [
-    "{\"name\":\"Rectangle\",\"type\":\"rounded_rect\",\"data\":{\"center\":{\"x\":0.127,\"y\":-0.0},\"size\":{\"width\":0.597,\"length\":0.075},\"borderRadius\":0.05,\"strokeWidth\":0.02,\"filled\":false}}"
-  ]
+  "robotFeatures": []
 }
