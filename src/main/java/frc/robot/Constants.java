@@ -71,6 +71,10 @@ public final class Constants {
  public static double L2Height = -70.1;
  public static double L3Height = -125;
  public static double L4Height = -180;
+ public static double HighAlgaeHeight = -160;
+ public static double LowAlgaeHeight = -120;
+ public static double LollipopHeight = -60;
+ public static double ProcessorHeight = -40; 
  public static double CoralStationHeight= -33.8; //set to l1 height
  //encoder values for vvrist
  public static double L1Angle = -12.6;
@@ -78,6 +82,7 @@ public final class Constants {
  public static double L3Angle = -12.6;
  public static double L4Angle = -9.5;
  public static double ZeroedAngle = 0;
+ public static double AlgaeAngle = -2;
  public static double CoralStationAngle= -4.5; //set to l4 angle
 
  //public static double CoralMaximum=1;

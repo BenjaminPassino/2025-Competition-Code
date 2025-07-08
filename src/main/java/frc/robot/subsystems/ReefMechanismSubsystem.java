@@ -77,6 +77,10 @@ public class ReefMechanismSubsystem extends SubsystemBase{
                 SmartDashboard.putNumber("L2",Constants.L2Height);
                 SmartDashboard.putNumber("L3",Constants.L3Height);
                 SmartDashboard.putNumber("L4",Constants.L4Height);
+                SmartDashboard.putNumber("L4",Constants.HighAlgaeHeight);
+                SmartDashboard.putNumber("L4",Constants.LowAlgaeHeight);
+                SmartDashboard.putNumber("L4",Constants.LollipopHeight);
+                SmartDashboard.putNumber("L4",Constants.ProcessorHeight);
               
                 //SmartDashboard.putNumber("ElevatorEncoder",);
                 SmartDashboard.putNumber("VVristPosition",Constants.VVristPosition);
@@ -107,6 +111,11 @@ public Command Updater(){ //updates smart dashboard values
   Constants.L2Height = (SmartDashboard.getNumber("L2Height",Constants.L2Height));
   Constants.L3Height = (SmartDashboard.getNumber("L3Height",Constants.L3Height));
   Constants.L4Height = (SmartDashboard.getNumber("L4Height",Constants.L4Height));
+  Constants.HighAlgaeHeight = (SmartDashboard.getNumber("HighAlgaeHeight",Constants.HighAlgaeHeight));
+  Constants.LowAlgaeHeight = (SmartDashboard.getNumber("LowAlgaeHeight",Constants.LowAlgaeHeight));
+  Constants.LollipopHeight = (SmartDashboard.getNumber("LollipopHeight",Constants.LollipopHeight));
+  Constants.ProcessorHeight = (SmartDashboard.getNumber("ProcessorHeight",Constants.ProcessorHeight));
+
 
   Constants.Pvar = (SmartDashboard.getNumber("ElevatorP", Constants.Pvar));
   Constants.Ivar = (SmartDashboard.getNumber("ElevatorI", Constants.Ivar));

@@ -156,18 +156,17 @@ public class RobotContainer {
 
     mechController.rightTrigger().whileTrue(reefSubsystem.AlgaeScoringMethod()).onFalse(reefSubsystem.AlgaeStop());
 
-    mechController.povLeft().whileTrue(deepClimbSubsystem.DeepClimbNotGrab());
-  
+    mechController.povLeft().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.LollipopHeight, Constants.AlgaeAngle));
 
-    mechController.povUp().whileTrue(deepClimbSubsystem.DeepClimbLift());//ClimberPIDMovement(UpPosition()));
+    mechController.povUp().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.HighAlgaeHeight, Constants.AlgaeAngle));
     mechController.povCenter().whileTrue(deepClimbSubsystem.DeepClimbStopMethod());
     
   //      .or(mechController.povDown()).whileTrue(deepClimbSubsystem.DeepClimbRelease())
   //      .whileFalse(deepClimbSubsystem.DeepClimbStopMethod());//rotate clockwise
 
-    mechController.povRight().whileTrue(deepClimbSubsystem.DeepClimbGrab());//ratchet
+  mechController.povRight().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.LowAlgaeHeight, Constants.AlgaeAngle));
 
-    mechController.povDown().whileTrue(deepClimbSubsystem.DeepClimbRelease());//ClimberPIDMovement(DownPosition()));
+  mechController.povDown().onTrue(reefSubsystem.ElevatorPIDMovement(Constants.ProcessorHeight, Constants.AlgaeAngle));
 
 // change to when it gets into specific climb position that it activates rumble to indicate successful climb
 
