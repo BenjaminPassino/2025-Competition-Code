@@ -40,7 +40,7 @@ public class ReefMechanismSubsystem extends SubsystemBase{
     private final static SparkMax ElevatorMotor = new SparkMax(Constants.ElevatorMotorPort,MotorType.kBrushless);
    // private final static FeedbackSensor ElevatorFeedback = new FeedbackSensor(ElevatorMotor.getAbsoluteEncoder());
  private RelativeEncoder ElevatorEncoder = ElevatorMotor.getEncoder();
- private RelativeEncoder CoralArmEncoder = CoralArmMotor.getEncoder();
+ private RelativeEncoder CoralArmEncoder = CoralArmMotor.getEncoder();  //silly little comment
     
         /* Limit Switch */
        
