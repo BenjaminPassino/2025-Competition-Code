@@ -58,23 +58,23 @@ public final class Constants {
   //REEF
   //motor speeds
  public static double CoralScoringSpeed = 0.25;
- public static double CoralArmSpeed = 0.5;
+ public static double CoralArmSpeed = 0.7;
  public static double CoralCollectionSpeed = -0.25;
  public static double CoralCollectionArmSpeed = -0.5;
  public static double AlgaeCollectionSpeed = -0.5;
  public static double AlgaeScoringSpeed = 0.5;
- public static double ElevatorUpSpeed = 0.5;
- public static double ElevatorDownSpeed = -0.5;
+ public static double ElevatorUpSpeed = 0.7;
+ public static double ElevatorDownSpeed = -0.7;
 
  //encoder values for elevator
  public static double L1Height = -33.8;
  public static double L2Height = -70.1;
  public static double L3Height = -125;
  public static double L4Height = -180;
- public static double HighAlgaeHeight = -160;
- public static double LowAlgaeHeight = -120;
- public static double LollipopHeight = -60;
- public static double ProcessorHeight = -40; 
+ public static double HighAlgaeHeight = -135.4;
+ public static double LowAlgaeHeight = -93.4;
+ public static double LollipopHeight = -51.2;
+ public static double ProcessorHeight = -45.9; 
  public static double CoralStationHeight= -33.8; //set to l1 height
  //encoder values for vvrist
  public static double L1Angle = -12.6;
